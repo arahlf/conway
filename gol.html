@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Conways Game of Life</title>
+        <!-- Ext includes -->
+        <link rel="stylesheet" type="text/css" href="ext/resources/css/ext-all.css" />
+        <script type="text/javascript" src="ext/ext-all-debug.js"></script>
+        
+        <link rel="stylesheet" type="text/css" href="src/css/gol.css" />
+        
+        <script type="text/javascript" src="src/js/GOL.js"></script>
+        <script type="text/javascript" src="src/js/Constants.js"></script>
+        <script type="text/javascript" src="src/js/Application.js"></script>
+        
+        <script type="text/javascript" src="src/js/registry/Register.js"></script>
+        <script type="text/javascript" src="src/js/registry/Registry.js"></script>
+        <script type="text/javascript" src="src/js/registry/MenuButton.js"></script>
+        
+        <script type="text/javascript" src="src/js/cell/Registry.js"></script>
+        <script type="text/javascript" src="src/js/cell/CellFactory.js"></script>
+        <script type="text/javascript" src="src/js/cell/BinaryCellFactory.js"></script>
+        <script type="text/javascript" src="src/js/cell/AgingCellFactory.js"></script>
+        <script type="text/javascript" src="src/js/cell/MortalCellFactory.js"></script>
+        <script type="text/javascript" src="src/js/cell/RandomCellFactory.js"></script>
+        
+        <script type="text/javascript" src="src/js/model/Grid.js"></script>
+        <script type="text/javascript" src="src/js/model/Cell.js"></script>
+        <script type="text/javascript" src="src/js/model/AbstractCell.js"></script>
+        <script type="text/javascript" src="src/js/model/CompositeCell.js"></script>
+        <script type="text/javascript" src="src/js/model/BinaryCell.js"></script>
+        <script type="text/javascript" src="src/js/model/AgingCell.js"></script>
+        <script type="text/javascript" src="src/js/view/Grid.js"></script>
+        <script type="text/javascript" src="src/js/view/Cell.js"></script>
+        <script type="text/javascript" src="src/js/view/BinaryCell.js"></script>
+        <script type="text/javascript" src="src/js/view/AgingCell.js"></script>
+        <script type="text/javascript" src="src/js/view/CellFactory.js"></script>
+        <script type="text/javascript" src="src/js/controller/Cell.js"></script>
+        <script type="text/javascript" src="src/js/controller/Grid.js"></script>
+        
+        <script type="text/javascript" src="src/js/pattern/Pattern.js"></script>
+        <script type="text/javascript" src="src/js/pattern/AbstractCoordinatePattern.js"></script>
+        <script type="text/javascript" src="src/js/pattern/Registry.js"></script>
+        <script type="text/javascript" src="src/js/pattern/Beacon.js"></script>
+        <script type="text/javascript" src="src/js/pattern/Glider.js"></script>
+        <script type="text/javascript" src="src/js/pattern/GliderGun.js"></script>
+        <script type="text/javascript" src="src/js/pattern/LWSS.js"></script>
+        <script type="text/javascript" src="src/js/pattern/Pulsar.js"></script>
+        <script type="text/javascript" src="src/js/pattern/Random.js"></script>
+        
+        <script type="text/javascript" src="build/rules-debug.js"></script>
+        
+        <script type="text/javascript">
+            Ext.onReady(function() {
+                var app = new GOL.Application({
+                    rows: 30,
+                    cols: 50
+                });
+                app.launch();
+            });
+        </script>
+    </head>
+    <body>
+    </body>
+</html>

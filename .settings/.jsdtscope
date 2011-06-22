@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry excluding="cells/|patterns/|rules/" kind="src" path="src/js"/>
+	<classpathentry kind="src" path="src/js/cells"/>
+	<classpathentry kind="src" path="src/js/patterns"/>
+	<classpathentry kind="src" path="src/js/rules"/>
+	<classpathentry kind="con" path="org.eclipse.wst.jsdt.launching.JRE_CONTAINER"/>
+</classpath>

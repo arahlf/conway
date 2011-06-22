@@ -1,0 +1,1 @@
+java -jar jsbuilder/JSBuilder2.jar -p %CD%\gol.jsb2 -d %CD%\

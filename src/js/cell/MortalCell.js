@@ -1,0 +1,1 @@
+// dies after a configured number of iterations

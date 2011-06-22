@@ -1,0 +1,1 @@
+GOL.registerCellFactory("Mortal", null);

@@ -16,15 +16,15 @@ Ext.define("GOL.view.BinaryCell", {
     },
     
     updateView: function() {
-        var el = this.getEl();
+        // profiler shows directly setting the DOM className is at
+        // least twice as fast as using Element's addCls + removeCls
+        var dom = this.getEl().dom;
         
         if (this.model.isAlive()) {
-            el.addCls(this.aliveCls);
-            el.removeCls(this.deadCls);
+            dom.className = this.aliveCls;
         }
         else {
-            el.addCls(this.deadCls);
-            el.removeCls(this.aliveCls);
+            dom.className = this.deadCls;
         }
     }
 });

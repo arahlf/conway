@@ -8,7 +8,7 @@ Ext.define("GOL.pattern.Glider", {
     /**
      * {@link GOL.pattern.Pattern#applyPattern} implementation
      */
-    applyPattern: function(gameOfLife) {
+    applyPattern: function(grid) {
         var coordinates = [
             [1, 1],
             [2, 2],

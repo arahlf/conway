@@ -28,5 +28,3 @@ Ext.define("GOL.rules.StandardRules", {
         }
     }
 });
-
-GOL.registerRules("Standard", new GOL.rules.StandardRules());

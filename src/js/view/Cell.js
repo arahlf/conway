@@ -13,7 +13,7 @@ Ext.define("GOL.view.Cell", {
         this.addEvents("click");
         
         this.el = el;
-        this.el.addCls(this.cls);
+        this.el.addCls(this.cls); // might break subclasses...
         this.el.on("mousedown", this.onMouseDown, this);
         this.el.on("mouseover", this.onMouseOver, this);
         

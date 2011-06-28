@@ -9,7 +9,7 @@ Ext.define("GOL.Application", {
     
     initComponent: function() {
         // clean up all these shorcuts...
-        var model = new GOL.model.Grid(this.rows, this.cols, GOL.rules.Registry.getDefaultValue());
+        var model = new GOL.model.Grid(this.rows, this.cols, new GOL.rules.StandardRules());
         model.configure(new GOL.cell.BinaryCellFactory());
         model.applyPattern(GOL.pattern.Registry.getDefaultValue());
 
@@ -18,9 +18,9 @@ Ext.define("GOL.Application", {
         // slow performance
         // - component query every time
         // - triggers a layout of the toolbar... fires "afterlayout"
-        this.gridModel.on("generationchange", function(grid, count) {
-            this.down("toolbar tbtext").setText("Generations: " + count);
-        }, this);
+        // this.gridModel.on("generationchange", function(grid, count) {
+            // this.down("toolbar tbtext").setText("Generations: " + count);
+        // }, this);
 
         this.gridController = new GOL.controller.Grid(model);
 
@@ -69,15 +69,10 @@ Ext.define("GOL.Application", {
                 scope: this
             }, "-", {
                 xtype: "golmenubutton",
+                itemId: "patternMenu",
                 registry: GOL.pattern.Registry,
                 text: "Pattern",
                 selectHandler: this.onPatternSelect,
-                scope: this
-            }, "-", {
-                xtype: "golmenubutton",
-                registry: GOL.rules.Registry,
-                text: "Rules",
-                selectHandler: this.onRulesSelect,
                 scope: this
             }, "->",{
                 xtype: "tbtext",
@@ -108,8 +103,7 @@ Ext.define("GOL.Application", {
     },
     
     onRewind: function() {
-        throw new Error("TODO - store pattern or let it be extracted somehow.");
-        this.gridModel.applyPattern();
+        this.gridModel.applyPattern(this.down("#patternMenu").getValue());
     },
 
     onPatternSelect: function(menuButton, register) {

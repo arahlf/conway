@@ -61,7 +61,7 @@ Ext.define("GOL.registry.MenuButton", {
     /**
      * Sets the currently selected Register.
      * @param {GOL.registry.Register} register
-     * @param {Boolean} silent (Optional) True to prevent the select event from
+     * @param {Boolean} silent (optional) True to prevent the select event from
      * firing.  Defaults to false.
      */
     setSelectedRegister: function(register, silent) {
@@ -75,7 +75,7 @@ Ext.define("GOL.registry.MenuButton", {
         }
     },
     
-    getSelectedRegister: function() {
-        return this.selectedRegister;
+    getValue: function() {
+        return this.selectedRegister.getValue();
     }
 });

@@ -6,16 +6,10 @@
         "name": "rules",
         "file": "rules.js",
         "fileIncludes": [{
-            "text": "Registry.js",
-            "path": "src/js/rules/"
-        }, {
             "text": "Rules.js",
             "path": "src/js/rules/"
         }, {
             "text": "StandardRules.js",
-            "path": "src/js/rules/"
-        }, {
-            "text": "CoinTossRules.js",
             "path": "src/js/rules/"
         }]
     }],

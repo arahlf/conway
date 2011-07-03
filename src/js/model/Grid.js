@@ -42,6 +42,7 @@ Ext.define("GOL.model.Grid", {
         }
 
         var cellList = me.cellList = Ext.Array.flatten(cells);
+        this.compositeCell = new GOL.model.CompositeCell(cellList);
 
         // assign cell neighbors
         for (var i = 0; i < cellList.length; i++) {
@@ -78,9 +79,7 @@ Ext.define("GOL.model.Grid", {
     },
 
     kill: function() {
-        var composite = new GOL.model.CompositeCell(this.cellList);
-        
-        composite.kill().commit();
+        this.compositeCell.kill().commit();
         
         this.generations = 0;
         
@@ -101,14 +100,8 @@ Ext.define("GOL.model.Grid", {
      * the 'generation' event.
      */
     nextGeneration: function() {
-        // avoiding function-based iteration
-        for (var i = 0; i < this.cellList.length; i++) {
-            this.rules.applyRules(this.cellList[i]);
-        }
-        
-        for (var i = 0; i < this.cellList.length; i++) {
-            this.cellList[i].commit();
-        }
+        this.compositeCell.applyRules(this.rules);
+        this.compositeCell.commit();
         
         this.fireEvent("generationchange", this, ++this.generations);
     },

@@ -18,9 +18,8 @@ Ext.define("GOL.model.AgingCell", {
         return this.age;
     },
 
-    commit: function() {
+    onCommit: function() {
         this.age = this.tempAge;
-        this.fireEvent("commit");
         return this;
     },
 

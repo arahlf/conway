@@ -7,12 +7,14 @@ Ext.define("GOL.model.Cell", {
     },
 
     constructor: function() {
-        this.addEvents(        /**
-         * @event commit
-         * Fired when the Cell's temporary state is committed.
-         * @param {GOL.cells.Cell} this
-         */
-        "commit");
+        this.addEvents(
+            /**
+             * @event commit
+             * Fired when the Cell's temporary state is committed.
+             * @param {GOL.cells.Cell} this
+             */
+            "commit"
+        );
     },
 
     /**

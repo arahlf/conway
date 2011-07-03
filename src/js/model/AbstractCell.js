@@ -18,6 +18,19 @@ Ext.define("GOL.model.AbstractCell", {
     getCol: function() {
         return this.col;
     },
+
+    /**
+     * A partial implementation that handles the firing of the commit event.
+     */
+    commit: function() {
+        this.onCommit();
+        this.fireEvent("commit", this);
+    },
+
+    /**
+     * Template method called when the Cell's state needs to be committed.
+     */
+    onCommit: GOL.abstractFn,
     
     getAliveNeighborsCount: function() {
         var count = 0, neighbors = this.neighbors;

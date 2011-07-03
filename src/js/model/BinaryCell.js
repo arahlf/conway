@@ -18,9 +18,8 @@ Ext.define("GOL.model.BinaryCell", {
         return this.alive;
     },
 
-    commit: function() {
+    onCommit: function() {
         this.alive = this.tempAlive;
-        this.fireEvent("commit");
         return this;
     },
 

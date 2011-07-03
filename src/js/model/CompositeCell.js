@@ -11,51 +11,50 @@ Ext.define("GOL.model.CompositeCell", {
     extend: "GOL.model.Cell",
     
     constructor: function(cells) {
-        this.cells = cells;
         this.callParent();
+        this.cells = cells;
     },
     
     /**
      * Iterates the Cells, calling the specified method on each Cell.
-     * Avoiding function-based iteration for better performance.
      * @param {String} methodName The method name to call on the composite.
+     * @return {GOL.model.CompositeCell} this
      * @private
      */
     eachCell: function(methodName) {
-        var cells = this.cells;
-        
-        for (var i = 0; i < cells.length; i++) {
-            (cells[i])[methodName]();
+        for (var i = 0; i < this.cells.length; i++) {
+            (this.cells[i])[methodName]();
+        }
+        return this;
+    },
+
+    /**
+     * Applies rules to the composite's Cells.
+     */
+    applyRules: function(rules) {
+        for (var i = 0; i < this.cells.length; i++) {
+            rules.applyRules(this.cells[i]);
         }
     },
     
     kill: function() {
-        this.eachCell("kill");
-        return this;
+        return this.eachCell("kill");
     },
     
     revive: function() {
-        this.eachCell("revive");
-        return this;
+        return this.eachCell("revive");
     },
     
     persist: function() {
-        this.eachCell("persist");
-        return this;
+        return this.eachCell("persist");
     },
     
     commit: function() {
-        this.eachCell("commit");
-        this.fireEvent("commit");
-        return this;
-    },
-    
-    applyRules: function(rules) {
-        // maybe?
+        return this.eachCell("commit");
     },
     
     // unsupported methods
-    getRow: GOL.unsupportedFn(),
+    getRow: GOL.unsupportedFn("CompositeCell.getRow"),
     getCol: GOL.unsupportedFn("CompositeCell.getCol"),
     getAliveNeighborsCount: GOL.unsupportedFn("CompositeCell.getAliveNeighborsCount"),
     setNeighbors: GOL.unsupportedFn("CompositeCell.setNeighbors"),

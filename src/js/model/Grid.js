@@ -86,10 +86,10 @@ Ext.define("GOL.model.Grid", {
         
         this.fireEvent("generationchange", this, this.generations);
     },
-
-    // check performance of function based iteration...
-    // store a secondary copy rather than flattening each time?
-    // ~73% of the time is spent adding/remove CSS classes
+    
+    /**
+     * Iterates the grid's Cells, calling the supplied function for each one.
+     */
     eachCell: function(fn, scope) {
         for (var i = 0; i < this.cellList.length; i++) {
             fn.call(scope, this.cellList[i]);
@@ -101,18 +101,16 @@ Ext.define("GOL.model.Grid", {
      * the 'generation' event.
      */
     nextGeneration: function() {
-        // get rid of function based iteration
-        this.eachCell(this.applyRules, this);
+        // avoiding function-based iteration
+        for (var i = 0; i < this.cellList.length; i++) {
+            this.rules.applyRules(this.cellList[i]);
+        }
         
-        this.eachCell(function(cell) {
-            cell.commit();
-        });
+        for (var i = 0; i < this.cellList.length; i++) {
+            this.cellList[i].commit();
+        }
         
         this.fireEvent("generationchange", this, ++this.generations);
-    },
-    
-    applyRules: function(cell) {
-        this.rules.applyRules(cell);
     },
     
     reset: function() {

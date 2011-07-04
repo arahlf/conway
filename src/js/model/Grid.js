@@ -3,6 +3,11 @@
  * The grid model.
  */
 Ext.define("GOL.model.Grid", {
+    
+    mixins: {
+        observable: "Ext.util.Observable"
+    },
+
     /**
      * @constructor
      * @param {Number} rows
@@ -60,10 +65,6 @@ Ext.define("GOL.model.Grid", {
             cell.setNeighbors(neighbors);
         }
         //this.fireEvent("configure");
-    },
-
-    mixins: {
-        observable: "Ext.util.Observable"
     },
 
     getRows: function() {

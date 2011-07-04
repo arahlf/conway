@@ -1,3 +1,6 @@
+/**
+ * @class GOL.controller.Grid
+ */
 Ext.define("GOL.controller.Grid", {
     
     mouseDown: false,
@@ -10,25 +13,30 @@ Ext.define("GOL.controller.Grid", {
         this.setupMouseListeners();
     },
     
+    setupMouseListeners: function() {
+        Ext.getDoc().on("mouseup", this.onDocumentMouseUp, this);
+
+        this.view.on("cellmousedown", this.onCellMouseDown, this);
+        this.view.on("cellmouseover", this.onCellMouseOver, this);
+    },
+
     getView: function() {
         return this.view;
     },
-    
-    setupMouseListeners: function() {
-        Ext.getDoc().on("mouseup", function() {
-            this.mouseDown = false;
-        }, this);
-        
-        this.view.on("cellmousedown", function(cell) {
-            this.mouseDown = true;
+
+    onDocumentMouseUp: function() {
+        this.mouseDown = false;
+    },
+
+    onCellMouseDown: function(cell) {
+        this.mouseDown = true;
+        cell.revive();
+    },
+
+    onCellMouseOver: function(cell) {
+        if (this.mouseDown) {
             cell.revive();
-        }, this);
-        
-        this.view.on("cellmouseover", function(cell) {
-            if (this.mouseDown) {
-                cell.revive();
-            }
-        }, this);
+        }
     },
     
     initialize: function() {

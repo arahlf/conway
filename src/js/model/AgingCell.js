@@ -37,5 +37,4 @@ Ext.define("GOL.model.AgingCell", {
         this.tempAge = 1;
         return this;
     }
-
 });

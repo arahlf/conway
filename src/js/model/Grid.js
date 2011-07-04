@@ -64,7 +64,6 @@ Ext.define("GOL.model.Grid", {
 
             cell.setNeighbors(neighbors);
         }
-        //this.fireEvent("configure");
     },
 
     getRows: function() {

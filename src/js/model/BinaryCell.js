@@ -36,5 +36,4 @@ Ext.define("GOL.model.BinaryCell", {
         this.tempAlive = true;
         return this;
     }
-
 });

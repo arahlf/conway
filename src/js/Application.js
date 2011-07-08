@@ -1,9 +1,19 @@
+/**
+ * @class GOL.Application
+ * @extends Ext.window.Window
+ */
 Ext.define("GOL.Application", {
     extend: "Ext.window.Window",
     
     closable: false,
     constrain: true,
     resizable: false,
+    
+    iconClsBomb: "gol-icon-bomb",
+    iconClsNext: "gol-icon-next",
+    iconClsPause: "gol-icon-pause",
+    iconClsPlay: "gol-icon-play",
+    iconClsRewind: "gol-icon-rewind",
     
     playSpeed: 1,
     
@@ -56,11 +66,11 @@ Ext.define("GOL.Application", {
     createToolbar: function() {
         return Ext.create("Ext.toolbar.Toolbar", {
             items: [
-                this.createIconButton(GOL.icons.BOMB, this.gridModel.kill, this.gridModel),
+                this.createIconButton(this.iconClsBomb, this.gridModel.kill, this.gridModel),
                 "-",
-                this.createIconButton(GOL.icons.REWIND, this.onRewind, this),
-                this.createIconButton(GOL.icons.PLAY, this.onPlayClick, this),
-                this.createIconButton(GOL.icons.NEXT, this.gridModel.nextGeneration, this.gridModel),
+                this.createIconButton(this.iconClsRewind, this.onRewind, this),
+                this.createIconButton(this.iconClsPlay, this.onPlayClick, this),
+                this.createIconButton(this.iconClsNext, this.gridModel.nextGeneration, this.gridModel),
                 "-",{
                 xtype: "golmenubutton",
                 registry: GOL.cell.Registry,
@@ -117,19 +127,22 @@ Ext.define("GOL.Application", {
         var me = this;
         var run = function() {
             me.gridModel.nextGeneration();
+            queueRun();
+        };
+        var queueRun = function() {
             me.timeout = setTimeout(run, me.playSpeed * 25);
         };
         
-        if (!this.playing === true) {
-            button.setIcon(GOL.icons.PAUSE);
+        if (this.playing !== true) {
+            button.setIconCls(this.iconClsPause);
             this.playing = true;
-            
+
             if (!this.timeout) {
                 this.timeout = setTimeout(run, this.playSpeed * 25);
             }
         }
         else {
-            button.setIcon(GOL.icons.PLAY);
+            button.setIconCls(this.iconClsPlay);
             this.playing = false;
             clearTimeout(this.timeout);
             delete this.timeout;
@@ -147,9 +160,9 @@ Ext.define("GOL.Application", {
         });
     },
     
-    createIconButton: function(icon, handler, scope) {
+    createIconButton: function(iconCls, handler, scope) {
         return Ext.create("Ext.button.Button", {
-            icon: icon,
+            iconCls: iconCls,
             handler: handler,
             scope: scope
         });

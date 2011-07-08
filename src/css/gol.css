@@ -29,3 +29,20 @@
 .x-tool-over .x-tool-gol-help {
     background-position: -15px 0;
 }
+
+/* buttons */
+.gol-icon-bomb {
+    background-image: url(../images/bomb.png);
+}
+.gol-icon-next {
+    background-image: url(../images/next.png);
+}
+.gol-icon-pause {
+    background-image: url(../images/pause.png);
+}
+.gol-icon-play {
+    background-image: url(../images/play.png);
+}
+.gol-icon-rewind {
+    background-image: url(../images/rewind.png);
+}

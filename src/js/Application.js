@@ -15,7 +15,7 @@ Ext.define("GOL.Application", {
     iconClsPlay: "gol-icon-play",
     iconClsRewind: "gol-icon-rewind",
     
-    playSpeed: 1,
+    millisPerIteration: 50,
     
     initComponent: function() {
         // clean up all these shorcuts...
@@ -130,7 +130,7 @@ Ext.define("GOL.Application", {
             queueRun();
         };
         var queueRun = function() {
-            me.timeout = setTimeout(run, me.playSpeed * 25);
+            me.timeout = setTimeout(run, me.millisPerIteration);
         };
         
         if (this.playing !== true) {
@@ -138,7 +138,7 @@ Ext.define("GOL.Application", {
             this.playing = true;
 
             if (!this.timeout) {
-                this.timeout = setTimeout(run, this.playSpeed * 25);
+                this.timeout = setTimeout(run, this.millisPerIteration);
             }
         }
         else {

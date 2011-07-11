@@ -9,14 +9,6 @@ Ext.define("GOL.Application", {
     constrain: true,
     resizable: false,
     
-    iconClsBomb: "gol-icon-bomb",
-    iconClsNext: "gol-icon-next",
-    iconClsPause: "gol-icon-pause",
-    iconClsPlay: "gol-icon-play",
-    iconClsRewind: "gol-icon-rewind",
-    
-    millisPerIteration: 50,
-    
     initComponent: function() {
         // clean up all these shorcuts...
         var model = new GOL.model.Grid(this.rows, this.cols, new GOL.rules.StandardRules());
@@ -64,30 +56,8 @@ Ext.define("GOL.Application", {
     },
 
     createToolbar: function() {
-        return Ext.create("Ext.toolbar.Toolbar", {
-            items: [
-                this.createIconButton(this.iconClsBomb, this.gridModel.kill, this.gridModel),
-                "-",
-                this.createIconButton(this.iconClsRewind, this.onRewind, this),
-                this.createIconButton(this.iconClsPlay, this.onPlayClick, this),
-                this.createIconButton(this.iconClsNext, this.gridModel.nextGeneration, this.gridModel),
-                "-",{
-                xtype: "golmenubutton",
-                registry: GOL.cell.Registry,
-                text: "Cell Type",
-                selectHandler: this.onCellTypeSelect,
-                scope: this
-            }, "-", {
-                xtype: "golmenubutton",
-                itemId: "patternMenu",
-                registry: GOL.pattern.Registry,
-                text: "Pattern",
-                selectHandler: this.onPatternSelect,
-                scope: this
-            }, "->",{
-                xtype: "tbtext",
-                text: "Generations: 0"
-            }]
+        return Ext.create("GOL.Toolbar", {
+            grid: this.gridModel
         });
     },
 
@@ -109,62 +79,6 @@ Ext.define("GOL.Application", {
             "<p>Directions: Use the controls on the bottom toolbar to configure the grid. " +
             "Click and drag over Cells to bring them back to life.<br /><br />" +
             "By: Alan Rahlf"
-        });
-    },
-    
-    onRewind: function() {
-        this.gridModel.applyPattern(this.down("#patternMenu").getValue());
-    },
-
-    onPatternSelect: function(menuButton, register) {
-        this.gridModel.applyPattern(register.getValue());
-    },
-
-    onCellTypeSelect: function(menuButton, register) {
-    },
-    
-    onPlayClick: function(button) {
-        var me = this;
-        var run = function() {
-            me.gridModel.nextGeneration();
-            queueRun();
-        };
-        var queueRun = function() {
-            me.timeout = setTimeout(run, me.millisPerIteration);
-        };
-        
-        if (this.playing !== true) {
-            button.setIconCls(this.iconClsPause);
-            this.playing = true;
-
-            if (!this.timeout) {
-                this.timeout = setTimeout(run, this.millisPerIteration);
-            }
-        }
-        else {
-            button.setIconCls(this.iconClsPlay);
-            this.playing = false;
-            clearTimeout(this.timeout);
-            delete this.timeout;
-        }
-    },
-    
-    /**
-     * An asynchronous, recursive task that spawns the next cell generation. 
-     */
-    playTask: function() {
-        this.gridModel.nextGeneration();
-        
-        Ext.TaskManager.start({
-            run: this.playTask 
-        });
-    },
-    
-    createIconButton: function(iconCls, handler, scope) {
-        return Ext.create("Ext.button.Button", {
-            iconCls: iconCls,
-            handler: handler,
-            scope: scope
         });
     }
 });

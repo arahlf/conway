@@ -4,7 +4,7 @@
  */
 Ext.define("GOL.pattern.Beacon", {
     extend: "GOL.pattern.AbstractCoordinatePattern",
-
+    
     /**
      * {@link GOL.pattern.Pattern#applyPattern} implementation
      */

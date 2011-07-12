@@ -30,6 +30,8 @@ Ext.define("GOL.Application", {
         this.toolbar = this.createToolbar();
 
         var view = this.gridController.getView();
+        
+        // disable the toolbar while "loading"
         view.on("beforeload", this.toolbar.disable, this.toolbar);
         view.on("load", this.toolbar.enable, this.toolbar);
 
@@ -44,10 +46,6 @@ Ext.define("GOL.Application", {
             bbar: this.toolbar
         });
         
-        this.playTask = {
-            run: this.nextGeneration
-        };
-
         this.callParent();
     },
 

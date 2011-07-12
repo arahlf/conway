@@ -1,6 +1,2 @@
-break out Application's toolbar into a separate class
 finish grid reconfiguration
 other cell implementations
-get rid of icon constants in favor of CSS classes
-
-43A8ED

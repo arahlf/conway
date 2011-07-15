@@ -59,7 +59,7 @@ Ext.define("GOL.view.Cell", {
     
     /**
      * Method called whenever the view needs to be updated, typically
-     * after the internal model has been committed.
+     * needed after the internal model's state has been committed.
      */
     updateView: GOL.abstractFn
 });

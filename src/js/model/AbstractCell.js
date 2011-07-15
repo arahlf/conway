@@ -46,5 +46,9 @@ Ext.define("GOL.model.AbstractCell", {
     
     setNeighbors: function(neighbors) {
         this.neighbors = neighbors;
+    },
+    
+    destroy: function() {
+        this.neighbors = null;
     }
 });

@@ -49,7 +49,7 @@ Ext.define("GOL.view.Grid", {
     },
     
     createGridView: function() {
-        return Ext.create("widget.component", {
+        return Ext.create("Ext.Component", {
             renderTpl: '<table class="gol-grid"><tbody></tbody></table>',
             renderSelectors: {
                 tableEl: "table.gol-grid",
@@ -63,7 +63,7 @@ Ext.define("GOL.view.Grid", {
         
         this.loadedRows = 0;
         
-        Ext.Function.defer(this.addRow, 250, this);
+        Ext.Function.defer(this.addRow, 50, this);
         
         this.fireEvent("beforeload");
     },
@@ -85,7 +85,8 @@ Ext.define("GOL.view.Grid", {
             this.attachListeners(cell);
         }
         
-        ++this.loadedRows;
+        this.loadedRows++;
+        
         this.progressBar.updateProgress(this.loadedRows / model.getRows());
         
         if (this.loadedRows < model.getRows()) {
@@ -106,7 +107,7 @@ Ext.define("GOL.view.Grid", {
         }, this);
     },
     
-    destroyCells: function() {
-    
+    destroy: function() {
+        Ext.destroy(this.cellControllers);
     }
 });

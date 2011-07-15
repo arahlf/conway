@@ -75,5 +75,10 @@ Ext.define("GOL.model.Cell", {
      * Kills the Cell.
      * @return {GOL.cells.Cell} this
      */
-    kill: GOL.abstractFn
+    kill: GOL.abstractFn,
+    
+    /**
+     * Destroy's the Cell (cleanup purposes).
+     */
+    destroy: GOL.abstractFn
 });

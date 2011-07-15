@@ -19,9 +19,9 @@ Ext.define("GOL.controller.Cell", {
     
     destroy: function() {
         this.model.destroy();
-        this.model = null;
-        
         this.view.destroy();
-        this.view = null;
+        
+        delete this.model;
+        delete this.view;
     }
 });

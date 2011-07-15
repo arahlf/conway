@@ -48,7 +48,10 @@ Ext.define("GOL.Application", {
         
         this.callParent();
     },
-
+    
+    /**
+     * Launches the application.
+     */
     launch: function() {
         this.show();
     },

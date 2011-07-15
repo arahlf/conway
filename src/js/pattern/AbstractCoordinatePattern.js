@@ -11,8 +11,12 @@ Ext.define("GOL.pattern.AbstractCoordinatePattern", {
      * @param {Array} coordinates A 2D array (rows/cols) of Cell coordinates.
      */
     applyCoordinates: function(grid, coordinates) {
-        Ext.each(coordinates, function(coordinate) {
+        var coordinate;
+        
+        for (var i=0; i<coordinates.length; i++) {
+            coordinate = coordinates[i];
+            
             grid.getCell(coordinate[1], coordinate[0]).revive().commit();
-        });
+        }
     }
 });

@@ -17,6 +17,10 @@
     background-image: none;
 }
 
+.gol-cell-aging {
+    background-image: url(../images/cells/overlay.png);
+}
+
 .x-tool .x-tool-gol-help {
     width: 16px;
     height: 16px;

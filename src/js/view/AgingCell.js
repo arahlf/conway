@@ -17,13 +17,11 @@ Ext.define("GOL.view.AgingCell", {
         
         // clean this up...
         if (this.model.isAlive()) {
-            el.addCls("gol-cell-alive");
-            el.removeCls("gol-cell-dead");
+            el.dom.className = "gol-cell-alive gol-cell-aging";
             el.setStyle("background-color", this.getAgeAsColor());
         }
         else {
-            el.removeCls("gol-cell-alive");
-            el.addCls("gol-cell-dead");
+            el.dom.className = "gol-cell-dead";
             el.setStyle("background-color", "transparent");
         }
     },

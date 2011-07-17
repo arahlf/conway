@@ -37,13 +37,5 @@ Ext.define("GOL.controller.Grid", {
         if (this.mouseDown) {
             cell.revive();
         }
-    },
-    
-    initialize: function() {
-        
-    },
-    
-    addRow: function() {
-        
     }
 });

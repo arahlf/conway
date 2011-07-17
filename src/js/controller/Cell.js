@@ -6,13 +6,17 @@ Ext.define("GOL.controller.Cell", {
     },
 
     kill: function() {
-        this.model.revive().commit();
+        if (this.model.isAlive()) {
+            this.model.revive().commit();
+        }
     },
 
     revive: function() {
-        this.model.revive().commit();
+        if (!this.model.isAlive()) {
+            this.model.revive().commit();
+        }
     },
-
+    
     getView: function() {
         return this.view;
     },

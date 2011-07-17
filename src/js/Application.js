@@ -12,7 +12,7 @@ Ext.define("GOL.Application", {
     initComponent: function() {
         // clean up all these shorcuts...
         var model = new GOL.model.Grid(this.rows, this.cols, new GOL.rules.StandardRules());
-        model.configure(new GOL.cell.BinaryCellFactory());
+        model.configure(new GOL.cell.AgingCellFactory());
         model.applyPattern(GOL.pattern.Registry.getDefaultValue());
 
         this.gridModel = model;

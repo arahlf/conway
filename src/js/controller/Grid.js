@@ -5,12 +5,24 @@ Ext.define("GOL.controller.Grid", {
     
     mouseDown: false,
     
-    constructor: function(model) {
-        this.model = model;
+    constructor: function(rows, cols, cellFactory, rules) {
+        this.model = new GOL.model.Grid(rows, cols, rules);
+        this.model.configure(cellFactory);
+        
         this.view = Ext.create("GOL.view.Grid", {
-            model: model
+            model: this.model
         });
+        
+        
         this.setupMouseListeners();
+    },
+    
+    applyPattern: function(pattern) {
+        this.model.applyPattern(pattern);
+    },
+    
+    nextGeneration: function() {
+        this.model.nextGeneration();
     },
     
     setupMouseListeners: function() {
@@ -37,5 +49,12 @@ Ext.define("GOL.controller.Grid", {
         if (this.mouseDown) {
             cell.revive();
         }
+    },
+    
+    destroy: function() {
+        Ext.getDoc().un("mouseup", this.onDocumentMouseUp, this);
+        
+        this.view.un("cellmousedown", this.onCellMouseDown, this);
+        this.view.un("cellmouseover", this.onCellMouseOver, this);
     }
 });

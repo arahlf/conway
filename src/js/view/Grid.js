@@ -63,27 +63,25 @@ Ext.define("GOL.view.Grid", {
         
         this.loadedRows = 0;
         
-        Ext.Function.defer(this.addRow, 50, this);
-        
-        this.fireEvent("beforeload");
+        Ext.defer(function() {
+            this.fireEvent("beforeload");
+            this.gridView.tbodyEl.update(GOL.view.TableMarkupFactory.getMarkupHtml(this.id + "cell", this.model.getRows(), this.model.getCols()));
+            
+            Ext.defer(this.addRow, 50, this);
+        }, 100, this);
     },
     
     addRow: function() {
         var model = this.model;
         
-        var row = this.gridView.tbodyEl.createChild({
-            tag: "tr"
-        });
+        var cells = this.gridView.tbodyEl.select("tr:nth(" + this.loadedRows + ") td");
         
-        for (var c = 0; c < model.getCols(); c++) {
-            var cellRenderTarget = row.createChild({
-                tag: "td"
-            });
-            
-            var cell = new GOL.controller.Cell(model.getCell(this.loadedRows, c), cellRenderTarget);
+        cells.each(function(cell, composite, index) {
+            console.log(index);
+            var cell = new GOL.controller.Cell(model.getCell(this.loadedRows, index), Ext.get(cell));
             this.cellControllers.push(cell);
             this.attachListeners(cell);
-        }
+        }, this);
         
         this.loadedRows++;
         
@@ -99,6 +97,7 @@ Ext.define("GOL.view.Grid", {
     },
     
     attachListeners: function(cell) {
+        // TODO use delegates instead
         cell.getView().on("mousedown", function() {
             this.fireEvent("cellmousedown", cell);
         }, this);
@@ -109,5 +108,9 @@ Ext.define("GOL.view.Grid", {
     
     destroy: function() {
         Ext.destroy(this.cellControllers);
+    },
+    
+    reconfigure: function(cellFactory) {
+        
     }
 });

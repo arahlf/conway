@@ -10,13 +10,6 @@ Ext.define("GOL.Application", {
     resizable: false,
     
     initComponent: function() {
-        // clean up all these shorcuts...
-        var model = new GOL.model.Grid(this.rows, this.cols, new GOL.rules.StandardRules());
-        model.configure(new GOL.cell.AgingCellFactory());
-        model.applyPattern(GOL.pattern.Registry.getDefaultValue());
-
-        this.gridModel = model;
-        
         // slow performance
         // - component query every time
         // - triggers a layout of the toolbar... fires "afterlayout"
@@ -24,8 +17,8 @@ Ext.define("GOL.Application", {
             // this.down("toolbar tbtext").setText("Generations: " + count);
         // }, this);
 
-        this.gridController = new GOL.controller.Grid(model);
-
+        this.gridController = new GOL.controller.Grid(this.rows, this.cols, new GOL.cell.AgingCellFactory(), new GOL.rules.StandardRules());
+        this.gridController.applyPattern(GOL.pattern.Registry.getDefaultValue());
         
         this.toolbar = this.createToolbar();
 
@@ -58,7 +51,7 @@ Ext.define("GOL.Application", {
 
     createToolbar: function() {
         return Ext.create("GOL.Toolbar", {
-            grid: this.gridModel
+            gridController: this.gridController
         });
     },
 

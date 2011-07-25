@@ -27,7 +27,7 @@ Ext.define("GOL.Toolbar", {
      * Triggers the next generation of Cells.
      */
     triggerNextGeneration: function() {
-        this.grid.nextGeneration();
+        this.gridController.nextGeneration();
     },
     
     /**
@@ -74,11 +74,11 @@ Ext.define("GOL.Toolbar", {
     },
     
     onBombClick: function() {
-        this.grid.kill();
+        this.gridController.kill();
     },
     
     onRewindClick: function() {
-        this.grid.applyPattern(this.down("#patternMenu").getValue());
+        this.gridController.applyPattern(this.down("#patternMenu").getValue());
     },
     
     onPlayClick: function(button) {
@@ -99,7 +99,7 @@ Ext.define("GOL.Toolbar", {
     },
     
     onPatternSelect: function(menuButton, register) {
-        this.grid.applyPattern(register.getValue());
+        this.gridController.applyPattern(register.getValue());
     },
     
     onCellTypeSelect: function(menuButton, register) {

@@ -96,11 +96,13 @@ Ext.define("GOL.view.Grid", {
     },
     
     onTableCellMouseDown: function(event, target) {
+        event.preventDefault();
         this.fireEvent("cellmousedown", this.getCellFromTarget(target));
         
     },
     
     onTableCellMouseOver: function(event, target) {
+        event.preventDefault();
         this.fireEvent("cellmouseover", this.getCellFromTarget(target));
     },
     

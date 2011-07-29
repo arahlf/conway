@@ -1,6 +1,6 @@
 /**
  * @class GOL.view.Grid
- * @extends Ext.Component
+ * @extends Ext.container.Container
  * @cfg {GOL.model.Grid} model The Grid's model.
  */
 Ext.define("GOL.view.Grid", {
@@ -12,8 +12,6 @@ Ext.define("GOL.view.Grid", {
     initComponent: function() {
         var cellSize = this.cellSize, model = this.model;
         
-        // normalize initialization here...
-        this.progressBar = this.createProgressBar();
         this.loadingView = this.createLoadingView();
         this.gridView = this.createGridView();
         this.cellControllers = [];
@@ -29,14 +27,6 @@ Ext.define("GOL.view.Grid", {
         this.callParent();
     },
     
-    createProgressBar: function() {
-        return new Ext.ProgressBar({
-            animate: false,
-            text: "Loading...",
-            width: 300
-        });
-    },
-    
     createLoadingView: function() {
         return Ext.create("widget.container", {
             layout: {
@@ -44,7 +34,12 @@ Ext.define("GOL.view.Grid", {
                 pack: "center",
                 align: "middle"
             },
-            items: this.progressBar
+            items: {
+                xtype: "progressbar",
+                animate: false,
+                text: "Loading...",
+                width: 300
+            }
         });
     },
     
@@ -65,7 +60,10 @@ Ext.define("GOL.view.Grid", {
         
         Ext.defer(function() {
             this.fireEvent("beforeload");
-            this.gridView.tbodyEl.update(GOL.view.TableMarkupFactory.getMarkupHtml(this.id + "cell", this.model.getRows(), this.model.getCols()));
+            this.gridView.tbodyEl.update(GOL.view.TableMarkupFactory.getMarkupHtml(this.id + "-cell", this.model.getRows(), this.model.getCols()));
+            
+            this.gridView.el.on("mousedown", this.onTableCellMouseDown, this, { delegate: "td" });
+            this.gridView.el.on("mouseover", this.onTableCellMouseOver, this, { delegate: "td" });
             
             Ext.defer(this.addRow, 50, this);
         }, 100, this);
@@ -74,21 +72,22 @@ Ext.define("GOL.view.Grid", {
     addRow: function() {
         var model = this.model;
         
-        var cells = this.gridView.tbodyEl.select("tr:nth(" + this.loadedRows + ") td");
+        var tableCells = this.gridView.tbodyEl.select("tr:nth(" + (this.loadedRows + 1) + ") td");
         
-        cells.each(function(cell, composite, index) {
-            console.log(index);
-            var cell = new GOL.controller.Cell(model.getCell(this.loadedRows, index), Ext.get(cell));
-            this.cellControllers.push(cell);
-            this.attachListeners(cell);
+        var row = [];
+        
+        tableCells.each(function(tableCell, composite, index) {
+            var cell = new GOL.controller.Cell(model.getCell(this.loadedRows, index), Ext.get(tableCell.dom));
+            row.push(cell);
         }, this);
         
+        this.cellControllers.push(row);
         this.loadedRows++;
         
-        this.progressBar.updateProgress(this.loadedRows / model.getRows());
+        this.loadingView.down("progressbar").updateProgress(this.loadedRows / model.getRows());
         
         if (this.loadedRows < model.getRows()) {
-            Ext.Function.defer(this.addRow, 15, this);
+            Ext.Function.defer(this.addRow, 10, this);
         }
         else {
             this.getLayout().next();
@@ -96,14 +95,19 @@ Ext.define("GOL.view.Grid", {
         }
     },
     
-    attachListeners: function(cell) {
-        // TODO use delegates instead
-        cell.getView().on("mousedown", function() {
-            this.fireEvent("cellmousedown", cell);
-        }, this);
-        cell.getView().on("mouseover", function() {
-            this.fireEvent("cellmouseover", cell);
-        }, this);
+    onTableCellMouseDown: function(event, target) {
+        this.fireEvent("cellmousedown", this.getCellFromTarget(target));
+        
+    },
+    
+    onTableCellMouseOver: function(event, target) {
+        this.fireEvent("cellmouseover", this.getCellFromTarget(target));
+    },
+    
+    getCellFromTarget: function(target) {
+        var match = target.id.match(/cell-(\d+)-(\d+)/); // ex: id="ext-comp-1015-cell-12-4"
+        
+        return this.cellControllers[parseInt(match[1], 10)][parseInt(match[2], 10)];
     },
     
     destroy: function() {

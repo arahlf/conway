@@ -51,6 +51,10 @@ Ext.define("GOL.controller.Grid", {
         }
     },
     
+    killCells: function() {
+        this.model.killCells();
+    },
+    
     destroy: function() {
         Ext.getDoc().un("mouseup", this.onDocumentMouseUp, this);
         

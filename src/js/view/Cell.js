@@ -32,7 +32,7 @@ Ext.define("GOL.view.Cell", {
      * Gets the view's model.
      * @return {GOL.model.Cell}
      */
-    getModel: function() {
+    getModel: function() { // needed?
         return this.model;
     },
     

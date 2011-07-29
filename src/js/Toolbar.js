@@ -74,7 +74,7 @@ Ext.define("GOL.Toolbar", {
     },
     
     onBombClick: function() {
-        this.gridController.kill();
+        this.gridController.killCells();
     },
     
     onRewindClick: function() {

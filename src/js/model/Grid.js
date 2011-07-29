@@ -78,7 +78,7 @@ Ext.define("GOL.model.Grid", {
         return this.cells[row][col];
     },
 
-    kill: function() {
+    killCells: function() {
         this.compositeCell.kill().commit();
         
         this.generations = 0;
@@ -117,7 +117,7 @@ Ext.define("GOL.model.Grid", {
      * @param {GOL.pattern.Pattern} pattern
      */
     applyPattern: function(pattern) {
-        this.kill();
+        this.killCells();
         pattern.applyPattern(this);
     }
 });

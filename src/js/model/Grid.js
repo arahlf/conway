@@ -25,7 +25,6 @@ Ext.define("GOL.model.Grid", {
         this.addEvents(
             /**
              * @event generationchange
-             * @param {GOL.model.Grid} this
              * @param {Number} count The new generation count.
              */
             "generationchange"
@@ -83,7 +82,7 @@ Ext.define("GOL.model.Grid", {
         
         this.generations = 0;
         
-        this.fireEvent("generationchange", this, this.generations);
+        this.fireEvent("generationchange", this.generations);
     },
     
     /**
@@ -103,7 +102,7 @@ Ext.define("GOL.model.Grid", {
         this.compositeCell.applyRules(this.rules);
         this.compositeCell.commit();
         
-        this.fireEvent("generationchange", this, ++this.generations);
+        this.fireEvent("generationchange", ++this.generations);
     },
     
     reset: function() {

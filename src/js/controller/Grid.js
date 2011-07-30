@@ -2,6 +2,9 @@
  * @class GOL.controller.Grid
  */
 Ext.define("GOL.controller.Grid", {
+    mixins: {
+        observable: "Ext.util.Observable"
+    },
     
     mouseDown: false,
     
@@ -13,6 +16,8 @@ Ext.define("GOL.controller.Grid", {
             model: this.model
         });
         
+        this.addEvents("generationchange");
+        this.relayEvents(this.model, ["generationchange"]);
         
         this.setupMouseListeners();
     },

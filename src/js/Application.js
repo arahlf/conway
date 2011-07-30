@@ -10,21 +10,17 @@ Ext.define("GOL.Application", {
     resizable: false,
     
     initComponent: function() {
-        // slow performance
-        // - component query every time
-        // - triggers a layout of the toolbar... fires "afterlayout"
-        // this.gridModel.on("generationchange", function(grid, count) {
-            // this.down("toolbar tbtext").setText("Generations: " + count);
-        // }, this);
+        var factory = new GOL.model.factory.AgingCellFactory();
+        var rules = new GOL.rules.StandardRules();
 
-        this.gridController = new GOL.controller.Grid(this.rows, this.cols, new GOL.cell.AgingCellFactory(), new GOL.rules.StandardRules());
+        this.gridController = new GOL.controller.Grid(this.rows, this.cols, factory, rules);
         this.gridController.applyPattern(GOL.pattern.Registry.getDefaultValue());
         
         this.toolbar = this.createToolbar();
 
         var view = this.gridController.getView();
         
-        // disable the toolbar while "loading"
+        // disable the toolbar while loading
         view.on("beforeload", this.toolbar.disable, this.toolbar);
         view.on("load", this.toolbar.enable, this.toolbar);
 
@@ -66,13 +62,11 @@ Ext.define("GOL.Application", {
             buttons: Ext.MessageBox.OK,
             icon: Ext.MessageBox.QUESTION,
             width: 450,
-            msg:
-            "A implementation of Conway's Game of Life using JavaScript and Ext JS 4 in the " +
-            "MVC paradigm.<br /><br />" +
-            "<p>For details behind Conway's Game of Life, see " + wikiLink + ".<br /><br />" +
-            "<p>Directions: Use the controls on the bottom toolbar to configure the grid. " +
-            "Click and drag over Cells to bring them back to life.<br /><br />" +
-            "By: Alan Rahlf"
+            msg: "A implementation of Conway's Game of Life using JavaScript and Ext JS 4 in the MVC paradigm.<br /><br />" +
+                 "<p>For details behind Conway's Game of Life, see " + wikiLink + ".<br /><br />" +
+                 "<p>Directions: Use the controls on the bottom toolbar to configure the grid. " +
+                 "Click and drag over Cells to bring them back to life.<br /><br />" +
+                 "By: Alan Rahlf"
         });
     }
 });

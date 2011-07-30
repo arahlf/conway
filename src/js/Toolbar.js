@@ -1,7 +1,8 @@
 /**
  * @class GOL.Toolbar
  * @extends Ext.toolbar.Toolbar
- * @cfg {GOL.model.Grid} grid A Toolbar used to interact with a {@link GOL.model.Grid}.
+ * @cfg {GOL.controller.Grid} gridController
+ * A Toolbar used to interact with a {@link GOL.model.Grid}.
  */
 Ext.define("GOL.Toolbar", {
     extend: "Ext.toolbar.Toolbar",
@@ -39,6 +40,16 @@ Ext.define("GOL.Toolbar", {
     },
     
     createItems: function() {
+        var tbarText = Ext.create("Ext.toolbar.TextItem", {
+            text: "Generations: 0"
+        });
+        
+        /* TODO slow performance
+        this.gridController.on("generationchange", function(count) {
+            tbarText.setText("Generations: " + count);
+        });
+        */
+        
         return [
             this.createIconButton(this.iconClsBomb, this.onBombClick),
             "-",
@@ -59,10 +70,7 @@ Ext.define("GOL.Toolbar", {
             text: "Pattern",
             selectHandler: this.onPatternSelect,
             scope: this
-        }, "->", {
-            xtype: "tbtext",
-            text: "Generations: 0"
-        }];
+        }, "->", tbarText];
     },
     
     createIconButton: function(iconCls, handler) {
@@ -103,5 +111,6 @@ Ext.define("GOL.Toolbar", {
     },
     
     onCellTypeSelect: function(menuButton, register) {
+        console.log(register.getValue());
     }
 });

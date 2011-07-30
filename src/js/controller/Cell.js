@@ -2,7 +2,7 @@ Ext.define("GOL.controller.Cell", {
 
     constructor: function(model, renderTo) {
         this.model = model;
-        this.view = GOL.view.CellFactory.createView(model, renderTo);
+        this.view = GOL.view.CellFactory.create(model, renderTo);
     },
 
     kill: function() {

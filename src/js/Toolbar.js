@@ -112,5 +112,6 @@ Ext.define("GOL.Toolbar", {
     
     onCellTypeSelect: function(menuButton, register) {
         this.gridController.reconfigure(register.getValue());
+        this.gridController.applyPattern(this.down("#patternMenu").getValue()); // duplicate
     }
 });

@@ -10,11 +10,6 @@ Ext.define("GOL.view.BinaryCell", {
     aliveCls: "gol-cell-alive",
     deadCls: "gol-cell-dead",
     
-    constructor: function() {
-        this.callParent(arguments);
-        this.updateView();
-    },
-    
     updateView: function() {
         // profiler shows directly setting the DOM className is at
         // least twice as fast as using Element's addCls + removeCls

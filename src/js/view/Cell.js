@@ -8,11 +8,12 @@ Ext.define("GOL.view.Cell", {
     },
     
     constructor: function(model, el) {
+        this.callParent();
+        
         this.el = el;
         this.model = model;
         this.model.on("commit", this.updateView, this);
-        
-        this.callParent();
+        this.updateView();
     },
     
     /**

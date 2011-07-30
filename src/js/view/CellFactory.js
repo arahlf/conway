@@ -9,7 +9,7 @@ GOL.view.CellFactory = {
             case "GOL.model.BinaryCell":
                 return new GOL.view.BinaryCell(model, renderTo);
             case "GOL.model.AgingCell":
-                return new GOL.view.AgingCell(model, renderTo);
+                return new GOL.view.RainbowCell(model, renderTo);
             case "GOL.model.MortalCell":
                 return new GOL.view.MortalCell(model, renderTo);
         };

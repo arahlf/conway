@@ -60,7 +60,7 @@ Ext.define("GOL.controller.Grid", {
     },
     
     reconfigure: function(cellFactory) {
-        this.grid.reconfigure(cellFactory);
+        this.model.reconfigure(cellFactory);
     },
     
     destroy: function() {

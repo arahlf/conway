@@ -10,19 +10,19 @@ Ext.define("GOL.view.Grid", {
     mouseDown: false,
     
     initComponent: function() {
-        var cellSize = this.cellSize, model = this.model;
-        
         this.loadingView = this.createLoadingView();
         this.gridView = this.createGridView();
         this.cellControllers = [];
         
         Ext.apply(this, {
-            width: cellSize * model.getCols(),
-            height: cellSize * model.getRows(),
+            width: this.cellSize * this.model.getCols(),
+            height: this.cellSize * this.model.getRows(),
             layout: "card",
             activeItem: 0,
             items: [this.loadingView, this.gridView]
         });
+        
+        this.model.on("reconfigure", this.onReconfigure, this);
         
         this.callParent();
     },
@@ -69,6 +69,18 @@ Ext.define("GOL.view.Grid", {
         }, 100, this);
     },
     
+    onReconfigure: function() {
+        this.fireEvent("beforeload");
+        this.getLayout().setActiveItem(this.loadingView);
+        
+        this.loadedRows = 0;
+        
+        Ext.destroy(this.cellControllers);
+        this.cellControllers = [];
+        
+        this.addRow();
+    },
+    
     addRow: function() {
         var model = this.model;
         
@@ -90,7 +102,7 @@ Ext.define("GOL.view.Grid", {
             Ext.Function.defer(this.addRow, 10, this);
         }
         else {
-            this.getLayout().next();
+            this.getLayout().setActiveItem(this.gridView);
             this.fireEvent("load"); // TODO document events
         }
     },

@@ -51,10 +51,10 @@ Ext.define("GOL.model.Grid", {
             for (var c = 0; c < this.cols; c++) {
                 row.push(cellFactory.createModel(r, c));
             }
-
+            
             cells.push(row);
         }
-
+        
         this.compositeCell = new GOL.model.CompositeCell(Ext.Array.flatten(cells));
         this.compositeCell.each(this.assignCellNeighbors, this);
     },
@@ -96,9 +96,7 @@ Ext.define("GOL.model.Grid", {
     killAllCells: function() {
         this.compositeCell.kill().commit();
         
-        this.generations = 0;
-        
-        this.fireEvent("generationchange", this.generations);
+        this.fireEvent("generationchange", (this.generations = 0));
     },
     
     /**

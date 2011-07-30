@@ -7,22 +7,16 @@
 Ext.define("GOL.view.AgingCell", {
     extend: "GOL.view.Cell",
     
-    constructor: function() {
-        this.callParent(arguments);
-        this.updateView();
-    },
-    
     updateView: function() {
-        var el = this.getEl();
+        var dom = this.getEl().dom;
         
-        // clean this up...
         if (this.model.isAlive()) {
-            el.dom.className = "gol-cell-alive gol-cell-aging";
-            el.dom.style.backgroundColor = this.getAgeAsColor();
+            dom.className = "gol-cell-alive gol-cell-aging";
+            dom.style.backgroundColor = this.getAgeAsColor();
         }
         else {
-            el.dom.className = "gol-cell-dead";
-            el.dom.style.backgroundColor = "transparent";
+            dom.className = "gol-cell-dead";
+            dom.style.backgroundColor = "transparent";
         }
     },
 
@@ -31,7 +25,12 @@ Ext.define("GOL.view.AgingCell", {
      */
     getAgeAsColor: function() {
         var code = Math.max(255 - (this.getModel().getAge() * 15), 75);
-
+        
         return Ext.String.format("rgb({0}, {1}, {2})", code, code, code);
+    },
+    
+    destroy: function() {
+        this.getEl().dom.style.backgroundColor = "transparent";
+        this.callParent();
     }
 });

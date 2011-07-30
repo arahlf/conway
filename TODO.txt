@@ -1,8 +1,11 @@
 finish grid reconfiguration
-other cell implementations
+other cell implementatons (rainbow)
 normalize use of me / this
 use jsb4
 enable gzip compression
 
 overall thoughts of MVC:
 controllers get bloated having to proxy everything to model
+
+notes:
+observable constructor can be called to initialize its internal "events" property

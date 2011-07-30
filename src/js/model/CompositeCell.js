@@ -16,41 +16,51 @@ Ext.define("GOL.model.CompositeCell", {
     },
     
     /**
-     * Iterates the Cells, calling the specified method on each Cell.
-     * @param {String} methodName The method name to call on the composite.
+     * Retrieves the list of underlying Cells.
+     * @return {Array}
+     */
+    getCells: function() {
+        return this.cells;
+    },
+    
+    /**
+     * Calls the passed function for each element in this composite.
+     * @param {Function} fn
+     * @param {Object} scope
+     * @return {GOL.model.CompositeCell} this
+     */
+    each: function(fn, scope) {
+        Ext.Array.forEach(this.cells, fn, scope);
+        return this;
+    },
+    
+    /**
+     * Calls the given method on each Cell in this composite (avoids function-based iteration).
+     * @param {String} methodName
      * @return {GOL.model.CompositeCell} this
      * @private
      */
-    eachCell: function(methodName) {
+    forEachCell: function(methodName) {
         for (var i = 0; i < this.cells.length; i++) {
             (this.cells[i])[methodName]();
         }
         return this;
     },
-
-    /**
-     * Applies rules to the composite's Cells.
-     */
-    applyRules: function(rules) {
-        for (var i = 0; i < this.cells.length; i++) {
-            rules.applyRules(this.cells[i]);
-        }
-    },
     
     kill: function() {
-        return this.eachCell("kill");
+        return this.forEachCell("kill");
     },
     
     revive: function() {
-        return this.eachCell("revive");
+        return this.forEachCell("revive");
     },
     
     persist: function() {
-        return this.eachCell("persist");
+        return this.forEachCell("persist");
     },
     
     commit: function() {
-        return this.eachCell("commit");
+        return this.forEachCell("commit");
     },
     
     // unsupported methods

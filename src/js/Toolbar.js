@@ -82,7 +82,7 @@ Ext.define("GOL.Toolbar", {
     },
     
     onBombClick: function() {
-        this.gridController.killCells();
+        this.gridController.killAllCells();
     },
     
     onRewindClick: function() {
@@ -111,6 +111,6 @@ Ext.define("GOL.Toolbar", {
     },
     
     onCellTypeSelect: function(menuButton, register) {
-        console.log(register.getValue());
+        this.gridController.reconfigure(register.getValue());
     }
 });

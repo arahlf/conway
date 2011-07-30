@@ -1,2 +1,8 @@
 finish grid reconfiguration
 other cell implementations
+normalize use of me / this
+use jsb4
+enable gzip compression
+
+overall thoughts of MVC:
+controllers get bloated having to proxy everything to model

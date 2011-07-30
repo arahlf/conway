@@ -9,8 +9,7 @@ Ext.define("GOL.controller.Grid", {
     mouseDown: false,
     
     constructor: function(rows, cols, cellFactory, rules) {
-        this.model = new GOL.model.Grid(rows, cols, rules);
-        this.model.configure(cellFactory);
+        this.model = new GOL.model.Grid(rows, cols, cellFactory, rules);
         
         this.view = Ext.create("GOL.view.Grid", {
             model: this.model
@@ -56,8 +55,12 @@ Ext.define("GOL.controller.Grid", {
         }
     },
     
-    killCells: function() {
-        this.model.killCells();
+    killAllCells: function() {
+        this.model.killAllCells();
+    },
+    
+    reconfigure: function(cellFactory) {
+        this.grid.reconfigure(cellFactory);
     },
     
     destroy: function() {

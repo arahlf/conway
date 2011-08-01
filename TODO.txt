@@ -1,6 +1,3 @@
-finish grid reconfiguration
-other cell implementatons (rainbow)
-normalize use of me / this
 use jsb4
 enable gzip compression
 

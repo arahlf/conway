@@ -5,10 +5,10 @@ Ext.define("GOL.model.AbstractCell", {
     extend: "GOL.model.Cell",
     
     constructor: function(row, col) {
-        var me = this;
+        this.row = row;
+        this.col = col;
         
-        me.row = row, me.col = col;
-        me.callParent();
+        this.callParent();
     },
     
     getRow: function() {

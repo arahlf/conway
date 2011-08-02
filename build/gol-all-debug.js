@@ -916,6 +916,7 @@ Ext.define("GOL.model.AbstractCell", {
     commit: function() {
         this.onCommit();
         this.fireEvent("commit", this);
+        return this;
     },
 
     /**
@@ -933,6 +934,10 @@ Ext.define("GOL.model.AbstractCell", {
         }
         
         return count;
+    },
+    
+    getNeighbors: function() {
+        return this.neighbors;
     },
     
     setNeighbors: function(neighbors) {
@@ -1040,7 +1045,6 @@ Ext.define("GOL.model.BinaryCell", {
 
     onCommit: function() {
         this.alive = this.tempAlive;
-        return this;
     },
 
     kill: function() {
@@ -1079,7 +1083,6 @@ Ext.define("GOL.model.AgingCell", {
     
     onCommit: function() {
         this.age = this.tempAge;
-        return this;
     },
     
     kill: function() {

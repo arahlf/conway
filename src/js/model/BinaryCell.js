@@ -20,7 +20,6 @@ Ext.define("GOL.model.BinaryCell", {
 
     onCommit: function() {
         this.alive = this.tempAlive;
-        return this;
     },
 
     kill: function() {

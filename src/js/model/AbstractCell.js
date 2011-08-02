@@ -25,6 +25,7 @@ Ext.define("GOL.model.AbstractCell", {
     commit: function() {
         this.onCommit();
         this.fireEvent("commit", this);
+        return this;
     },
 
     /**
@@ -42,6 +43,10 @@ Ext.define("GOL.model.AbstractCell", {
         }
         
         return count;
+    },
+    
+    getNeighbors: function() {
+        return this.neighbors;
     },
     
     setNeighbors: function(neighbors) {

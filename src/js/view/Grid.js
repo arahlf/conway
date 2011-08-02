@@ -12,9 +12,9 @@ Ext.define("GOL.view.Grid", {
     initComponent: function() {
         this.loadingView = this.createLoadingView();
         this.gridView = this.createGridView();
-        this.cellControllers = [];
         
         Ext.apply(this, {
+            cellControllers: [],
             width: this.cellSize * this.model.getCols(),
             height: this.cellSize * this.model.getRows(),
             layout: "card",
@@ -83,9 +83,7 @@ Ext.define("GOL.view.Grid", {
     
     addRow: function() {
         var model = this.model;
-        
         var tableCells = this.gridView.tbodyEl.select("tr:nth(" + (this.loadedRows + 1) + ") td");
-        
         var row = [];
         
         tableCells.each(function(tableCell, composite, index) {
@@ -126,9 +124,5 @@ Ext.define("GOL.view.Grid", {
     
     destroy: function() {
         Ext.destroy(this.cellControllers);
-    },
-    
-    reconfigure: function(cellFactory) {
-        
     }
 });

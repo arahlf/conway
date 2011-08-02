@@ -1,23 +1,6 @@
 Ext.define("GOL.view.TableMarkupFactory", {
     singleton: true,
     
-    tpl: new Ext.XTemplate(
-        '<tpl for="rows">',
-            '<tr>',
-                '<tpl for="cols">',
-                    '<td>{.}</td>',
-                '</tpl>',
-            '</tr>',
-        '</tpl>'
-    ),
-    
-    createList: function(start, stop) {
-        for (var list=[], i=start; i<stop; i++) {
-            list.push(i);
-        }
-        return list;
-    },
-    
     getMarkupHtml: function(cellPrefix, rows, cols) {
         var rowsArray = this.createList(0, rows);
         var colsArray = this.createList(0, cols);
@@ -32,5 +15,12 @@ Ext.define("GOL.view.TableMarkupFactory", {
         });
         
         return rowTpl.apply({rows: rowsArray});
+    },
+    
+    createList: function(start, stop) {
+        for (var list=[], i=start; i<stop; i++) {
+            list.push(i);
+        }
+        return list;
     }
 });

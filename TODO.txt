@@ -1,4 +1,5 @@
 table markup creation
+comments
 enable gzip compression
 
 overall thoughts of MVC:

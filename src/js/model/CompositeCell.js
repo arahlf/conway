@@ -34,19 +34,6 @@ Ext.define("GOL.model.CompositeCell", {
         return this;
     },
     
-    /**
-     * Calls the given method on each Cell in this composite (avoids function-based iteration).
-     * @param {String} methodName
-     * @return {GOL.model.CompositeCell} this
-     * @private
-     */
-    forEachCell: function(methodName) {
-        for (var i = 0; i < this.cells.length; i++) {
-            (this.cells[i])[methodName]();
-        }
-        return this;
-    },
-    
     kill: function() {
         return this.forEachCell("kill");
     },
@@ -61,6 +48,19 @@ Ext.define("GOL.model.CompositeCell", {
     
     commit: function() {
         return this.forEachCell("commit");
+    },
+    
+    /**
+     * Calls the given method on each Cell in this composite (avoids function-based iteration).
+     * @param {String} methodName
+     * @return {GOL.model.CompositeCell} this
+     * @private
+     */
+    forEachCell: function(methodName) {
+        for (var i = 0; i < this.cells.length; i++) {
+            (this.cells[i])[methodName]();
+        }
+        return this;
     },
     
     // unsupported methods

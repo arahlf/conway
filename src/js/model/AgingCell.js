@@ -28,7 +28,9 @@ Ext.define("GOL.model.AgingCell", {
     },
     
     persist: function() {
-        this.tempAge++;
+        if (this.tempAge > 0) {
+            this.tempAge++;
+        }
         return this;
     },
     

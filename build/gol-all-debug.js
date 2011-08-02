@@ -1091,7 +1091,9 @@ Ext.define("GOL.model.AgingCell", {
     },
     
     persist: function() {
-        this.tempAge++;
+        if (this.tempAge > 0) {
+            this.tempAge++;
+        }
         return this;
     },
     
@@ -1112,7 +1114,7 @@ Ext.define("GOL.model.RainbowCell", {
     MAX_AGE: 7,
     
     persist: function() {
-        if (this.getAge() < this.MAX_AGE) {
+        if (this.age < this.MAX_AGE && this.tempAge < this.MAX_AGE) {
             this.tempAge++;
         }
         return this;
@@ -1171,7 +1173,7 @@ Ext.define("GOL.model.factory.RandomCellFactory", {
     extend: "GOL.model.factory.CellFactory",
     
     createModel: function(row, col) {
-        switch (Math.ceil(Math.random() * 3)) { // TODO Mortal Cell
+        switch (Math.ceil(Math.random() * 3)) {
             case 1:
                 return new GOL.model.BinaryCell(row, col);
             case 2:

@@ -1,17 +1,8 @@
 {
     "projectName": "Conway's Game of Life",
     "licenseText": "",
+    
     "packages": [{
-        "name": "Rules",
-        "id": "rules",
-        "files": [{
-            "path": "src/js/rules/",
-            "name": "Rules.js"
-        }, {
-            "path": "src/js/rules/",
-            "name": "StandardRules.js"
-        }]
-    }, {
         "name": "Application",
         "id": "application",
         "files": [{
@@ -25,6 +16,16 @@
             "name": "Toolbar.js"
         }]
     }, {
+        "name": "Rules",
+        "id": "rules",
+        "files": [{
+            "path": "src/js/rules/",
+            "name": "Rules.js"
+        }, {
+            "path": "src/js/rules/",
+            "name": "StandardRules.js"
+        }]
+    }, {
         "name": "Registry",
         "id": "registry",
         "files": [{
@@ -36,6 +37,37 @@
         }, {
             "path": "src/js/registry/",
             "name": "MenuButton.js"
+        }]
+    }, {
+        "name": "Pattern",
+        "id": "pattern",
+        "files": [{
+            "path": "src/js/pattern/",
+            "name": "Pattern.js"
+        }, {
+            "path": "src/js/pattern/",
+            "name": "AbstractCoordinatePattern.js"
+        }, {
+            "path": "src/js/pattern/",
+            "name": "Registry.js"
+        }, {
+            "path": "src/js/pattern/",
+            "name": "Random.js"
+        }, {
+            "path": "src/js/pattern/",
+            "name": "Beacon.js"
+        }, {
+            "path": "src/js/pattern/",
+            "name": "Glider.js"
+        }, {
+            "path": "src/js/pattern/",
+            "name": "GliderGun.js"
+        }, {
+            "path": "src/js/pattern/",
+            "name": "LWSS.js"
+        }, {
+            "path": "src/js/pattern/",
+            "name": "Pulsar.js"
         }]
     }, {
         "name": "Model",
@@ -89,19 +121,19 @@
         }, {
             "path": "src/js/view/",
             "name": "Grid.js"
-        }{
+        }, {
             "path": "src/js/view/",
             "name": "Cell.js"
-        }{
+        }, {
             "path": "src/js/view/",
             "name": "BinaryCell.js"
-        }{
+        }, {
             "path": "src/js/view/",
             "name": "AgingCell.js"
-        }{
+        }, {
             "path": "src/js/view/",
             "name": "RainbowCell.js"
-        }{
+        }, {
             "path": "src/js/view/",
             "name": "CellFactory.js"
         }]
@@ -112,39 +144,35 @@
             "path": "src/js/controller/",
             "name": "Cell.js"
         }, {
-            "path": "src/js/controller",
+            "path": "src/js/controller/",
             "name": "Grid.js"
         }]
+    }],
+    
+    "builds": [{
+        "name": "All",
+        "target": "gol-all.js",
+        "compress": true,
+        "packages": [
+             "application",
+             "rules",
+             "registry",
+             "pattern",
+             "model",
+             "view",
+             "controller"
+         ]
     }, {
-        "name": "Pattern",
-        "id": "pattern",
-        "files": [{
-            "path": "src/js/pattern/",
-            "name": "Pattern.js"
-        }, {
-            "path": "src/js/pattern/",
-            "name": "AbstractCoordinatePattern.js"
-        }, {
-            "path": "src/js/pattern/",
-            "name": "Registry.js"
-        }, {
-            "path": "src/js/pattern/",
-            "name": "Random.js"
-        }, {
-            "path": "src/js/pattern/",
-            "name": "Beacon.js"
-        }, {
-            "path": "src/js/pattern/",
-            "name": "Glider.js"
-        }, {
-            "path": "src/js/pattern/",
-            "name": "GliderGun.js"
-        }, {
-            "path": "src/js/pattern/",
-            "name": "LWSS.js"
-        }, {
-            "path": "src/js/pattern/",
-            "name": "Pulsar.js"
-        }]
+        "name": "All Debug",
+        "target": "gol-all-debug.js",
+        "packages": [
+             "application",
+             "rules",
+             "registry",
+             "pattern",
+             "model",
+             "view",
+             "controller"
+         ]
     }]
 }

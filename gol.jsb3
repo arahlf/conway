@@ -1,0 +1,150 @@
+{
+    "projectName": "Conway's Game of Life",
+    "licenseText": "",
+    "packages": [{
+        "name": "Rules",
+        "id": "rules",
+        "files": [{
+            "path": "src/js/rules/",
+            "name": "Rules.js"
+        }, {
+            "path": "src/js/rules/",
+            "name": "StandardRules.js"
+        }]
+    }, {
+        "name": "Application",
+        "id": "application",
+        "files": [{
+            "path": "src/js/",
+            "name": "GOL.js"
+        }, {
+            "path": "src/js/",
+            "name": "Application.js"
+        }, {
+            "path": "src/js/",
+            "name": "Toolbar.js"
+        }]
+    }, {
+        "name": "Registry",
+        "id": "registry",
+        "files": [{
+            "path": "src/js/registry/",
+            "name": "Register.js"
+        }, {
+            "path": "src/js/registry/",
+            "name": "Registry.js"
+        }, {
+            "path": "src/js/registry/",
+            "name": "MenuButton.js"
+        }]
+    }, {
+        "name": "Model",
+        "id": "model",
+        "files": [{
+            "path": "src/js/model/",
+            "name": "Grid.js"
+        }, {
+            "path": "src/js/model/",
+            "name": "Cell.js"
+        }, {
+            "path": "src/js/model/",
+            "name": "AbstractCell.js"
+        }, {
+            "path": "src/js/model/",
+            "name": "CompositeCell.js"
+        }, {
+            "path": "src/js/model/",
+            "name": "BinaryCell.js"
+        }, {
+            "path": "src/js/model/",
+            "name": "AgingCell.js"
+        }, {
+            "path": "src/js/model/",
+            "name": "RainbowCell.js"
+        }, {
+            "path": "src/js/model/factory/",
+            "name": "Registry.js"
+        }, {
+            "path": "src/js/model/factory/",
+            "name": "CellFactory.js"
+        }, {
+            "path": "src/js/model/factory/",
+            "name": "AgingCellFactory.js"
+        }, {
+            "path": "src/js/model/factory/",
+            "name": "BinaryCellFactory.js"
+        }, {
+            "path": "src/js/model/factory/",
+            "name": "RainbowCellFactory.js"
+        }, {
+            "path": "src/js/model/factory/",
+            "name": "RandomCellFactory.js"
+        }]
+    }, {
+        "name": "View",
+        "id": "view",
+        "files": [{
+            "path": "src/js/view/",
+            "name": "TableMarkupFactory.js"
+        }, {
+            "path": "src/js/view/",
+            "name": "Grid.js"
+        }{
+            "path": "src/js/view/",
+            "name": "Cell.js"
+        }{
+            "path": "src/js/view/",
+            "name": "BinaryCell.js"
+        }{
+            "path": "src/js/view/",
+            "name": "AgingCell.js"
+        }{
+            "path": "src/js/view/",
+            "name": "RainbowCell.js"
+        }{
+            "path": "src/js/view/",
+            "name": "CellFactory.js"
+        }]
+    }, {
+        "name": "Controller",
+        "id": "controller",
+        "files": [{
+            "path": "src/js/controller/",
+            "name": "Cell.js"
+        }, {
+            "path": "src/js/controller",
+            "name": "Grid.js"
+        }]
+    }, {
+        "name": "Pattern",
+        "id": "pattern",
+        "files": [{
+            "path": "src/js/pattern/",
+            "name": "Pattern.js"
+        }, {
+            "path": "src/js/pattern/",
+            "name": "AbstractCoordinatePattern.js"
+        }, {
+            "path": "src/js/pattern/",
+            "name": "Registry.js"
+        }, {
+            "path": "src/js/pattern/",
+            "name": "Random.js"
+        }, {
+            "path": "src/js/pattern/",
+            "name": "Beacon.js"
+        }, {
+            "path": "src/js/pattern/",
+            "name": "Glider.js"
+        }, {
+            "path": "src/js/pattern/",
+            "name": "GliderGun.js"
+        }, {
+            "path": "src/js/pattern/",
+            "name": "LWSS.js"
+        }, {
+            "path": "src/js/pattern/",
+            "name": "Pulsar.js"
+        }]
+    }]
+}

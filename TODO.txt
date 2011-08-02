@@ -1,4 +1,4 @@
-use jsb4
+table markup creation
 enable gzip compression
 
 overall thoughts of MVC:

@@ -19,17 +19,14 @@ describe('model/TU_AbstractCell', function() {
     });
     
     it('should throw an error if onCommit is not implemented', function() {
-        // jasmine executes the "actual" in a different scope...
-        expect(Ext.bind(cell.commit, cell)).toThrow('Abstract function called directly.');
+        expect(function() { cell.commit(); }).toThrow('Abstract function called directly.');
     });
     
     it('should fire the commit event', function() {
-        spyOn(cell, 'onCommit');
+        spyOn(cell, 'onCommit'); // used to ignore it
         
         var fired = false;
-        var listener = function() {
-            fired = true;
-        };
+        var listener = function() { fired = true; };
         
         cell.on('commit', listener);
         

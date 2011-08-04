@@ -1,10 +1,4 @@
-unit tests
+fix IE
 table markup creation
 comments/alpha.
-enable gzip compression
-
-overall thoughts of MVC:
-controllers get bloated having to proxy everything to model
-
-notes:
-observable constructor can be called to initialize its internal "events" property
+generation count??

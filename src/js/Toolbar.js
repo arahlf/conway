@@ -2,7 +2,7 @@
  * @class GOL.Toolbar
  * @extends Ext.toolbar.Toolbar
  * @cfg {GOL.controller.Grid} gridController
- * A Toolbar used to interact with a {@link GOL.model.Grid}.
+ * A Toolbar used to interact with a {@link GOL.controller.Grid}.
  */
 Ext.define("GOL.Toolbar", {
     extend: "Ext.toolbar.Toolbar",
@@ -20,7 +20,21 @@ Ext.define("GOL.Toolbar", {
     iconClsNext: "gol-icon-next",
     
     initComponent: function() {
-        this.items = this.createItems();
+        Ext.apply(this, {
+            // buttons
+            bombButton: this.createIconButton(this.iconClsBomb, this.onBombClick),
+            rewindButton: this.createIconButton(this.iconClsRewind, this.onRewindClick),
+            playButton: this.createIconButton(this.iconClsPlay, this.onPlayClick),
+            nextButton: this.createIconButton(this.iconClsNext, this.onNextClick),
+            // menus
+            cellTypeMenu: this.createMenuButton(GOL.cell.Registry, "Cell Type", this.onCellTypeSelect, this),
+            patternMenu: this.createMenuButton(GOL.pattern.Registry, "Pattern", this.onPatternSelect, this),
+            // status text
+            statusText: this.createStatusText()
+        });
+        
+        this.items = this.getItems();
+        this.gridController.on("generationchange", this.updateStatusText, this);
         this.callParent();
     },
     
@@ -39,38 +53,22 @@ Ext.define("GOL.Toolbar", {
         return !!this.intervalId;
     },
     
-    createItems: function() {
-        var tbarText = Ext.create("Ext.toolbar.TextItem", {
-            text: "Generations: 0"
+    createStatusText: function() {
+        return Ext.create("Ext.Component", {
+            width: 175,
+            cls: "gol-status-text",
+            html: "Generations: 0"
         });
-        
-        /* TODO slow performance
-        this.gridController.on("generationchange", function(count) {
-            tbarText.setText("Generations: " + count);
-        });
-        */
-        
+    },
+    
+    getItems: function() {
         return [
-            this.createIconButton(this.iconClsBomb, this.onBombClick),
-            "-",
-            this.createIconButton(this.iconClsRewind, this.onRewindClick),
-            this.createIconButton(this.iconClsPlay, this.onPlayClick),
-            this.createIconButton(this.iconClsNext, this.onNextClick),
-            "-",
-        {
-            xtype: "golmenubutton",
-            registry: GOL.cell.Registry,
-            text: "Cell Type",
-            selectHandler: this.onCellTypeSelect,
-            scope: this
-        }, "-", {
-            xtype: "golmenubutton",
-            itemId: "patternMenu",
-            registry: GOL.pattern.Registry,
-            text: "Pattern",
-            selectHandler: this.onPatternSelect,
-            scope: this
-        }, "->", tbarText];
+            this.bombButton, "-",
+            this.rewindButton, this.playButton, this.nextButton, "-",
+            this.cellTypeMenu, "-",
+            this.patternMenu, "->",
+            this.statusText
+        ];
     },
     
     createIconButton: function(iconCls, handler) {
@@ -81,23 +79,50 @@ Ext.define("GOL.Toolbar", {
         });
     },
     
+    createMenuButton: function(registry, text, selectHandler, scope) {
+        return Ext.create("GOL.registry.MenuButton", {
+            registry: registry,
+            text: text,
+            selectHandler: selectHandler,
+            scope: scope
+        });
+    },
+    
     onBombClick: function() {
+        if (this.isPlaying()) {
+            this.stopPlaying();
+        }
         this.gridController.killAllCells();
     },
     
     onRewindClick: function() {
-        this.gridController.applyPattern(this.down("#patternMenu").getValue());
+        if (this.isPlaying()) {
+            this.stopPlaying();
+        }
+        this.gridController.applyPattern(this.patternMenu.getValue());
     },
     
-    onPlayClick: function(button) {
-        if (!this.isPlaying()) {
-            button.setIconCls(this.iconClsPause);
-            this.intervalId = setInterval(Ext.bind(this.triggerNextGeneration, this), this.millisPerIteration);
+    updateStatusText: function(count) {
+        this.statusText.el.dom.innerHTML = "Generations: " + count;
+    },
+    
+    onPlayClick: function() {
+        if (this.isPlaying()) {
+            this.stopPlaying();
         } else {
-            button.setIconCls(this.iconClsPlay);
-            clearInterval(this.intervalId);
-            delete this.intervalId;
+            this.startPlaying();
         }
+    },
+    
+    startPlaying: function() {
+        this.playButton.setIconCls(this.iconClsPause);
+        this.intervalId = setInterval(Ext.bind(this.triggerNextGeneration, this), this.millisPerIteration);
+    },
+    
+    stopPlaying: function() {
+        this.playButton.setIconCls(this.iconClsPlay);
+        clearInterval(this.intervalId);
+        delete this.intervalId;
     },
     
     onNextClick: function() {
@@ -112,6 +137,6 @@ Ext.define("GOL.Toolbar", {
     
     onCellTypeSelect: function(menuButton, register) {
         this.gridController.reconfigure(register.getValue());
-        this.gridController.applyPattern(this.down("#patternMenu").getValue()); // duplicate
+        this.gridController.applyPattern(this.patternMenu.getValue());
     }
 });

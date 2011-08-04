@@ -12,7 +12,6 @@
 // figure out how to add tooltips on a menu item
 
 Ext.define("GOL.registry.MenuButton", {
-    alias: "widget.golmenubutton",
     extend: "Ext.button.Button",
     
     initComponent: function() {

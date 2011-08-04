@@ -1,6 +1,6 @@
 /**
  * @class GOL.model.Grid
- * The grid model.
+ * The Grid model.
  */
 Ext.define("GOL.model.Grid", {
     

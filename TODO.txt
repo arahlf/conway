@@ -1,4 +1,5 @@
 fix IE
+further optimize loops (storing length as precondition)
 table markup creation
 comments/alpha.
 generation count??

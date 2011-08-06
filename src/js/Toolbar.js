@@ -122,7 +122,7 @@ Ext.define("GOL.Toolbar", {
     stopPlaying: function() {
         this.playButton.setIconCls(this.iconClsPlay);
         clearInterval(this.intervalId);
-        delete this.intervalId;
+        this.intervalId = null;
     },
     
     onNextClick: function() {

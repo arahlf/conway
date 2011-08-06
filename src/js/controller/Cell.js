@@ -25,7 +25,7 @@ Ext.define("GOL.controller.Cell", {
         this.model.destroy();
         this.view.destroy();
         
-        delete this.model;
-        delete this.view;
+        this.model = null;
+        this.view = null;
     }
 });

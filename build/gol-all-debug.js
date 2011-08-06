@@ -218,7 +218,7 @@ Ext.define("GOL.Toolbar", {
     stopPlaying: function() {
         this.playButton.setIconCls(this.iconClsPlay);
         clearInterval(this.intervalId);
-        delete this.intervalId;
+        this.intervalId = null;
     },
     
     onNextClick: function() {
@@ -1535,8 +1535,8 @@ Ext.define("GOL.controller.Cell", {
         this.model.destroy();
         this.view.destroy();
         
-        delete this.model;
-        delete this.view;
+        this.model = null;
+        this.view = null;
     }
 });
 /**

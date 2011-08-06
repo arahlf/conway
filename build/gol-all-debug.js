@@ -441,7 +441,7 @@ Ext.define("GOL.pattern.AbstractCoordinatePattern", {
     applyCoordinates: function(grid, coordinates) {
         var coordinate;
         
-        for (var i=0; i<coordinates.length; i++) {
+        for (var i = 0, length = coordinates.length; i < length; i++) {
             coordinate = coordinates[i];
             
             grid.getCell(coordinate[1], coordinate[0]).revive().commit();
@@ -766,12 +766,15 @@ Ext.define("GOL.model.Grid", {
     },
     
     assignCellNeighbors: function(cell) {
-        var row = cell.getRow(), col = cell.getCol(), neighbors = [];
+        var cells = this.cells,
+            row = cell.getRow(),
+            col = cell.getCol(),
+            neighbors = [];
         
         for (var r = row - 1; r <= row + 1; r++) {
             for (var c = col - 1; c <= col + 1; c++) {
-                if (this.cells[r] && this.cells[r][c] && this.cells[r][c] != cell) {
-                    neighbors.push(this.cells[r][c]);
+                if (cells[r] && cells[r][c] && cells[r][c] != cell) {
+                    neighbors.push(cells[r][c]);
                 }
             }
         }
@@ -809,10 +812,11 @@ Ext.define("GOL.model.Grid", {
      * the 'generation' event.
      */
     nextGeneration: function() {
-        var cells = this.compositeCell.getCells();
+        var cells = this.compositeCell.getCells(),
+            rules = this.rules;
         
-        for (var i=0; i<cells.length; i++) {
-            this.rules.applyRules(cells[i]);
+        for (var i = 0, length = cells.length; i < length; i++) {
+            rules.applyRules(cells[i]);
         }
         
         this.compositeCell.commit();
@@ -951,7 +955,7 @@ Ext.define("GOL.model.AbstractCell", {
     getAliveNeighborsCount: function() {
         var count = 0, neighbors = this.neighbors;
         
-        for (var i = 0; i < neighbors.length; i++) {
+        for (var i = 0, length = neighbors.length; i < length; i++) {
             if (neighbors[i].isAlive()) {
                 count++;
             }
@@ -1032,8 +1036,10 @@ Ext.define("GOL.model.CompositeCell", {
      * @private
      */
     forEachCell: function(methodName) {
-        for (var i = 0; i < this.cells.length; i++) {
-            (this.cells[i])[methodName]();
+        var cells = this.cells;
+        
+        for (var i = 0, length = cells.length; i < length; i++) {
+            (cells[i])[methodName]();
         }
         return this;
     },

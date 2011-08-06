@@ -13,7 +13,7 @@ Ext.define("GOL.pattern.AbstractCoordinatePattern", {
     applyCoordinates: function(grid, coordinates) {
         var coordinate;
         
-        for (var i=0; i<coordinates.length; i++) {
+        for (var i = 0, length = coordinates.length; i < length; i++) {
             coordinate = coordinates[i];
             
             grid.getCell(coordinate[1], coordinate[0]).revive().commit();

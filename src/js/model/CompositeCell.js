@@ -57,8 +57,10 @@ Ext.define("GOL.model.CompositeCell", {
      * @private
      */
     forEachCell: function(methodName) {
-        for (var i = 0; i < this.cells.length; i++) {
-            (this.cells[i])[methodName]();
+        var cells = this.cells;
+        
+        for (var i = 0, length = cells.length; i < length; i++) {
+            (cells[i])[methodName]();
         }
         return this;
     },

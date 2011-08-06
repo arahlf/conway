@@ -68,12 +68,15 @@ Ext.define("GOL.model.Grid", {
     },
     
     assignCellNeighbors: function(cell) {
-        var row = cell.getRow(), col = cell.getCol(), neighbors = [];
+        var cells = this.cells,
+            row = cell.getRow(),
+            col = cell.getCol(),
+            neighbors = [];
         
         for (var r = row - 1; r <= row + 1; r++) {
             for (var c = col - 1; c <= col + 1; c++) {
-                if (this.cells[r] && this.cells[r][c] && this.cells[r][c] != cell) {
-                    neighbors.push(this.cells[r][c]);
+                if (cells[r] && cells[r][c] && cells[r][c] != cell) {
+                    neighbors.push(cells[r][c]);
                 }
             }
         }
@@ -111,10 +114,11 @@ Ext.define("GOL.model.Grid", {
      * the 'generation' event.
      */
     nextGeneration: function() {
-        var cells = this.compositeCell.getCells();
+        var cells = this.compositeCell.getCells(),
+            rules = this.rules;
         
-        for (var i=0; i<cells.length; i++) {
-            this.rules.applyRules(cells[i]);
+        for (var i = 0, length = cells.length; i < length; i++) {
+            rules.applyRules(cells[i]);
         }
         
         this.compositeCell.commit();

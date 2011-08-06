@@ -36,7 +36,7 @@ Ext.define("GOL.model.AbstractCell", {
     getAliveNeighborsCount: function() {
         var count = 0, neighbors = this.neighbors;
         
-        for (var i = 0; i < neighbors.length; i++) {
+        for (var i = 0, length = neighbors.length; i < length; i++) {
             if (neighbors[i].isAlive()) {
                 count++;
             }

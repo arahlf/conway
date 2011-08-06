@@ -34,7 +34,7 @@ Ext.define('GOL.Application', {
     resizable: false,
     
     initComponent: function() {
-        var factory = new GOL.model.factory.AgingCellFactory();
+        var factory = new GOL.model.factory.RainbowCellFactory();
         var rules = new GOL.rules.StandardRules();
 
         this.gridController = new GOL.controller.Grid(this.rows, this.cols, factory, rules);
@@ -463,6 +463,61 @@ GOL.pattern.Registry = new GOL.registry.Registry();
  */
 GOL.registerPattern = Ext.bind(GOL.pattern.Registry.register, GOL.pattern.Registry);
 /**
+ * @class GOL.pattern.GliderGun
+ * @extends GOL.pattern.Pattern
+ */
+Ext.define('GOL.pattern.GliderGun', {
+    extend: 'GOL.pattern.AbstractCoordinatePattern',
+    
+    /**
+     * {@link GOL.pattern.Pattern#applyPattern} implementation
+     */
+    applyPattern: function(grid) {
+        var coordinates = [
+            [2, 6],
+            [2, 7],
+            [3, 6],
+            [3, 7],
+            [12, 6],
+            [12, 7],
+            [12, 8],
+            [13, 5],
+            [13, 9],
+            [14, 4],
+            [14, 10],
+            [15, 4],
+            [15, 10],
+            [16, 7],
+            [17, 5],
+            [17, 9],
+            [18, 6],
+            [18, 7],
+            [18, 8],
+            [19, 7],
+            [22, 4],
+            [22, 5],
+            [22, 6],
+            [23, 4],
+            [23, 5],
+            [23, 6],
+            [24, 3],
+            [24, 7],
+            [26, 2],
+            [26, 3],
+            [26, 7],
+            [26, 8],
+            [36, 4],
+            [36, 5],
+            [37, 4],
+            [37, 5]
+        ];
+        
+        this.applyCoordinates(grid, coordinates);
+    }
+});
+
+GOL.registerPattern('Glider Gun', new GOL.pattern.GliderGun());
+/**
  * @class GOL.pattern.Random
  * @extends GOL.pattern.Pattern A pattern that randomly (50/50) either kills or revives a Cell.
  */
@@ -536,61 +591,6 @@ Ext.define('GOL.pattern.Glider', {
 });
 
 GOL.registerPattern('Glider', new GOL.pattern.Glider());
-/**
- * @class GOL.pattern.GliderGun
- * @extends GOL.pattern.Pattern
- */
-Ext.define('GOL.pattern.GliderGun', {
-    extend: 'GOL.pattern.AbstractCoordinatePattern',
-    
-    /**
-     * {@link GOL.pattern.Pattern#applyPattern} implementation
-     */
-    applyPattern: function(grid) {
-        var coordinates = [
-            [2, 6],
-            [2, 7],
-            [3, 6],
-            [3, 7],
-            [12, 6],
-            [12, 7],
-            [12, 8],
-            [13, 5],
-            [13, 9],
-            [14, 4],
-            [14, 10],
-            [15, 4],
-            [15, 10],
-            [16, 7],
-            [17, 5],
-            [17, 9],
-            [18, 6],
-            [18, 7],
-            [18, 8],
-            [19, 7],
-            [22, 4],
-            [22, 5],
-            [22, 6],
-            [23, 4],
-            [23, 5],
-            [23, 6],
-            [24, 3],
-            [24, 7],
-            [26, 2],
-            [26, 3],
-            [26, 7],
-            [26, 8],
-            [36, 4],
-            [36, 5],
-            [37, 4],
-            [37, 5]
-        ];
-        
-        this.applyCoordinates(grid, coordinates);
-    }
-});
-
-GOL.registerPattern('Glider Gun', new GOL.pattern.GliderGun());
 /**
  * @class GOL.pattern.LWSS
  * @extends GOL.pattern.Pattern
@@ -1172,6 +1172,15 @@ Ext.define('GOL.model.factory.CellFactory', {
      */
     createCell: GOL.abstractFn
 });
+Ext.define('GOL.model.factory.RainbowCellFactory', {
+    extend: 'GOL.model.factory.CellFactory',
+    
+    createModel: function(row, col) {
+        return new GOL.model.RainbowCell(row, col);
+    }
+});
+
+GOL.registerCellFactory('Rainbow', new GOL.model.factory.RainbowCellFactory());
 Ext.define('GOL.model.factory.AgingCellFactory', {
     extend: 'GOL.model.factory.CellFactory',
     
@@ -1190,15 +1199,6 @@ Ext.define('GOL.model.factory.BinaryCellFactory', {
 });
 
 GOL.registerCellFactory('Binary', new GOL.model.factory.BinaryCellFactory());
-Ext.define('GOL.model.factory.RainbowCellFactory', {
-    extend: 'GOL.model.factory.CellFactory',
-    
-    createModel: function(row, col) {
-        return new GOL.model.RainbowCell(row, col);
-    }
-});
-
-GOL.registerCellFactory('Rainbow', new GOL.model.factory.RainbowCellFactory());
 Ext.define('GOL.model.factory.RandomCellFactory', {
     extend: 'GOL.model.factory.CellFactory',
     

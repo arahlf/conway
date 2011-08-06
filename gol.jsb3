@@ -52,6 +52,9 @@
             "name": "Registry.js"
         }, {
             "path": "src/js/pattern/",
+            "name": "GliderGun.js"
+        }, {
+            "path": "src/js/pattern/",
             "name": "Random.js"
         }, {
             "path": "src/js/pattern/",
@@ -59,9 +62,6 @@
         }, {
             "path": "src/js/pattern/",
             "name": "Glider.js"
-        }, {
-            "path": "src/js/pattern/",
-            "name": "GliderGun.js"
         }, {
             "path": "src/js/pattern/",
             "name": "LWSS.js"
@@ -101,13 +101,13 @@
             "name": "CellFactory.js"
         }, {
             "path": "src/js/model/factory/",
+            "name": "RainbowCellFactory.js"
+        }, {
+            "path": "src/js/model/factory/",
             "name": "AgingCellFactory.js"
         }, {
             "path": "src/js/model/factory/",
             "name": "BinaryCellFactory.js"
-        }, {
-            "path": "src/js/model/factory/",
-            "name": "RainbowCellFactory.js"
         }, {
             "path": "src/js/model/factory/",
             "name": "RandomCellFactory.js"

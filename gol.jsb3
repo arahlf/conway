@@ -117,7 +117,7 @@
         "id": "view",
         "files": [{
             "path": "src/js/view/",
-            "name": "TableMarkupFactory.js"
+            "name": "Table.js"
         }, {
             "path": "src/js/view/",
             "name": "Grid.js"

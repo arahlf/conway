@@ -4,5 +4,5 @@ Ext.define("GOL.model.factory.CellFactory", {
      * @param {Number} row
      * @param {Number} col
      */
-    createCell: GOL.abstractFn,
+    createCell: GOL.abstractFn
 });

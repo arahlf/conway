@@ -1170,7 +1170,7 @@ Ext.define("GOL.model.factory.CellFactory", {
      * @param {Number} row
      * @param {Number} col
      */
-    createCell: GOL.abstractFn,
+    createCell: GOL.abstractFn
 });
 Ext.define("GOL.model.factory.AgingCellFactory", {
     extend: "GOL.model.factory.CellFactory",
@@ -1216,25 +1216,38 @@ Ext.define("GOL.model.factory.RandomCellFactory", {
 
 GOL.registerCellFactory("Random", new GOL.model.factory.RandomCellFactory());
 
-Ext.define("GOL.view.TableMarkupFactory", {
-    singleton: true,
+/**
+ * @class GOL.view.Table
+ * @extends Ext.Component
+ * 
+ * A utility class for creating an empty HTML table.  Each table cell will
+ * have an auto-generated id in the format of: "{id}-{row}-{col}".
+ * 
+ * @cfg {Number} rows (required)
+ * @cfg {Number} cols (required)
+ */
+Ext.define("GOL.view.Table", {
+    extend: "Ext.Component",
     
-    getMarkupHtml: function(cellPrefix, rows, cols) {
-        var rowsArray = this.createList(0, rows);
-        var colsArray = this.createList(0, cols);
+    autoEl: "table",
+    
+    renderTpl: new Ext.XTemplate('<tbody><tpl for="rows">{[this.getRowMarkup(parent, xindex -1)]}</tpl></tbody>', {
         
-        var colTpl = new Ext.XTemplate('<tpl for="cols"><td id="{[parent.prefix]}-{[parent.row]}-{.}"></td></tpl>');
-        var rowTpl = new Ext.XTemplate('<tpl for="rows"><tr>{[this.getCellMarkup()]}</tr></tpl>', {
-            rowCount: 0,
-            
-            getCellMarkup: function() {
-                return colTpl.apply({cols: colsArray, prefix: cellPrefix, row: this.rowCount++});
-            }
-        });
+        rowTpl: new Ext.XTemplate('<tr><tpl for="cols"><td id="{parent.prefix}-{parent.row}-{.}"></td></tpl></tr>'),
         
-        return rowTpl.apply({rows: rowsArray});
+        getRowMarkup: function(values, row) {
+            return this.rowTpl.apply({prefix: values.id, cols: values.cols, row: row});
+        }
+    }),
+    
+    initComponent: function() {
+        this.renderData.rows = this.createList(0, this.rows);
+        this.renderData.cols = this.createList(0, this.cols);
+        
+        this.callParent();
     },
     
+    // simple utility to create a list
     createList: function(start, stop) {
         for (var list=[], i=start; i<stop; i++) {
             list.push(i);
@@ -1288,12 +1301,10 @@ Ext.define("GOL.view.Grid", {
     },
     
     createGridView: function() {
-        return Ext.create("Ext.Component", {
-            renderTpl: '<table class="gol-grid"><tbody></tbody></table>',
-            renderSelectors: {
-                tableEl: "table.gol-grid",
-                tbodyEl: "table.gol-grid > tbody"
-            }
+        return Ext.create("GOL.view.Table", {
+            cls: 'gol-grid',
+            rows: this.model.getRows(),
+            cols: this.model.getCols()
         });
     },
     
@@ -1304,7 +1315,6 @@ Ext.define("GOL.view.Grid", {
         
         Ext.defer(function() {
             this.fireEvent("beforeload");
-            this.gridView.tbodyEl.update(GOL.view.TableMarkupFactory.getMarkupHtml(this.id + "-cell", this.model.getRows(), this.model.getCols()));
             
             this.gridView.el.on("mousedown", this.onTableCellMouseDown, this, { delegate: "td" });
             this.gridView.el.on("mouseover", this.onTableCellMouseOver, this, { delegate: "td" });
@@ -1327,7 +1337,7 @@ Ext.define("GOL.view.Grid", {
     
     addRow: function() {
         var model = this.model;
-        var tableCells = this.gridView.tbodyEl.select("tr:nth(" + (this.loadedRows + 1) + ") td");
+        var tableCells = this.gridView.el.select("tr:nth(" + (this.loadedRows + 1) + ") td");
         var row = [];
         
         tableCells.each(function(tableCell, composite, index) {
@@ -1361,7 +1371,7 @@ Ext.define("GOL.view.Grid", {
     },
     
     getCellFromTarget: function(target) {
-        var match = target.id.match(/cell-(\d+)-(\d+)/); // ex: id="ext-comp-1015-cell-12-4"
+        var match = target.id.match(/-(\d+)-(\d+)$/); // ex: id="ext-comp-1015-cell-12-4"
         
         return this.cellControllers[parseInt(match[1], 10)][parseInt(match[2], 10)];
     },

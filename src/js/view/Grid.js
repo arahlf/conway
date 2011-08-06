@@ -44,12 +44,10 @@ Ext.define("GOL.view.Grid", {
     },
     
     createGridView: function() {
-        return Ext.create("Ext.Component", {
-            renderTpl: '<table class="gol-grid"><tbody></tbody></table>',
-            renderSelectors: {
-                tableEl: "table.gol-grid",
-                tbodyEl: "table.gol-grid > tbody"
-            }
+        return Ext.create("GOL.view.Table", {
+            cls: 'gol-grid',
+            rows: this.model.getRows(),
+            cols: this.model.getCols()
         });
     },
     
@@ -60,7 +58,6 @@ Ext.define("GOL.view.Grid", {
         
         Ext.defer(function() {
             this.fireEvent("beforeload");
-            this.gridView.tbodyEl.update(GOL.view.TableMarkupFactory.getMarkupHtml(this.id + "-cell", this.model.getRows(), this.model.getCols()));
             
             this.gridView.el.on("mousedown", this.onTableCellMouseDown, this, { delegate: "td" });
             this.gridView.el.on("mouseover", this.onTableCellMouseOver, this, { delegate: "td" });
@@ -83,7 +80,7 @@ Ext.define("GOL.view.Grid", {
     
     addRow: function() {
         var model = this.model;
-        var tableCells = this.gridView.tbodyEl.select("tr:nth(" + (this.loadedRows + 1) + ") td");
+        var tableCells = this.gridView.el.select("tr:nth(" + (this.loadedRows + 1) + ") td");
         var row = [];
         
         tableCells.each(function(tableCell, composite, index) {
@@ -117,7 +114,7 @@ Ext.define("GOL.view.Grid", {
     },
     
     getCellFromTarget: function(target) {
-        var match = target.id.match(/cell-(\d+)-(\d+)/); // ex: id="ext-comp-1015-cell-12-4"
+        var match = target.id.match(/-(\d+)-(\d+)$/); // ex: id="ext-comp-1015-cell-12-4"
         
         return this.cellControllers[parseInt(match[1], 10)][parseInt(match[2], 10)];
     },

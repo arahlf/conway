@@ -7,7 +7,7 @@ GOL = {
      * This is used to better simulate interfaces/abstract classes.
      */
     abstractFn: function() {
-        throw new Error("Abstract function called directly.");
+        throw new Error('Abstract function called directly.');
     },
     
     /**
@@ -17,7 +17,7 @@ GOL = {
      */
     unsupportedFn: function(message) {
         return function() {
-            throw new Error("Unsupported operation: " + message);
+            throw new Error('Unsupported operation: ' + message);
         };
     }
 };

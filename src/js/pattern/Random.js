@@ -2,8 +2,8 @@
  * @class GOL.pattern.Random
  * @extends GOL.pattern.Pattern A pattern that randomly (50/50) either kills or revives a Cell.
  */
-Ext.define("GOL.pattern.Random", {
-    extend: "GOL.pattern.Pattern",
+Ext.define('GOL.pattern.Random', {
+    extend: 'GOL.pattern.Pattern',
     
     /**
      * {@link GOL.pattern.Pattern#applyPattern} implementation
@@ -21,4 +21,4 @@ Ext.define("GOL.pattern.Random", {
     }
 });
 
-GOL.registerPattern("Random", new GOL.pattern.Random());
+GOL.registerPattern('Random', new GOL.pattern.Random());

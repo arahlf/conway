@@ -4,11 +4,11 @@
  * @constructor
  * @param {GOL.model.Cell} model A cell model.
  */
-Ext.define("GOL.view.BinaryCell", {
-    extend: "GOL.view.Cell",
+Ext.define('GOL.view.BinaryCell', {
+    extend: 'GOL.view.Cell',
     
-    aliveCls: "gol-cell-alive",
-    deadCls: "gol-cell-dead",
+    aliveCls: 'gol-cell-alive',
+    deadCls: 'gol-cell-dead',
     
     updateView: function() {
         // profiler shows directly setting the DOM className is at

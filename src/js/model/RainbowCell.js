@@ -4,8 +4,8 @@
  * 
  * A Cell implementation that keeps track of its age.
  */
-Ext.define("GOL.model.RainbowCell", {
-    extend: "GOL.model.AgingCell",
+Ext.define('GOL.model.RainbowCell', {
+    extend: 'GOL.model.AgingCell',
     
     MAX_AGE: 7,
     

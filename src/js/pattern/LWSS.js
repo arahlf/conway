@@ -2,8 +2,8 @@
  * @class GOL.pattern.LWSS
  * @extends GOL.pattern.Pattern
  */
-Ext.define("GOL.pattern.LWSS", {
-    extend: "GOL.pattern.AbstractCoordinatePattern",
+Ext.define('GOL.pattern.LWSS', {
+    extend: 'GOL.pattern.AbstractCoordinatePattern',
     
     /**
      * {@link GOL.pattern.Pattern#applyPattern} implementation
@@ -25,4 +25,4 @@ Ext.define("GOL.pattern.LWSS", {
     }
 });
 
-GOL.registerPattern("LWSS", new GOL.pattern.LWSS());
+GOL.registerPattern('LWSS', new GOL.pattern.LWSS());

@@ -1,9 +1,9 @@
 /**
  * An interface for Cells.
  */
-Ext.define("GOL.model.Cell", {
+Ext.define('GOL.model.Cell', {
     mixins: {
-        observable: "Ext.util.Observable"
+        observable: 'Ext.util.Observable'
     },
 
     constructor: function() {
@@ -13,7 +13,7 @@ Ext.define("GOL.model.Cell", {
              * Fired when the Cell's temporary state is committed.
              * @param {GOL.cells.Cell} this
              */
-            "commit"
+            'commit'
         );
     },
 
@@ -30,7 +30,7 @@ Ext.define("GOL.model.Cell", {
     getCol: GOL.abstractFn,
 
     /**
-     * Commits the temporary state of the Cell and fires the "commit" event.
+     * Commits the temporary state of the Cell and fires the 'commit' event.
      * @return {GOL.cells.Cell} this
      */
     commit: GOL.abstractFn,

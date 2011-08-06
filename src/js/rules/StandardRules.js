@@ -6,8 +6,8 @@
  * three neighbors live on, any others die.  A dead cell with exactly 3
  * neighbors is reborn.
  */
-Ext.define("GOL.rules.StandardRules", {
-    extend: "GOL.rules.Rules",
+Ext.define('GOL.rules.StandardRules', {
+    extend: 'GOL.rules.Rules',
 
     /**
      * {@link GOL.rules.Rules#applyRules} implementation

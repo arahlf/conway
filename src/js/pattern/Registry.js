@@ -1,4 +1,4 @@
-Ext.ns("GOL.pattern");
+Ext.ns('GOL.pattern');
 
 /**
  * @class GOL.pattern.Registry

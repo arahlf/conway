@@ -1,9 +1,9 @@
 /**
  * @class GOL.controller.Grid
  */
-Ext.define("GOL.controller.Grid", {
+Ext.define('GOL.controller.Grid', {
     mixins: {
-        observable: "Ext.util.Observable"
+        observable: 'Ext.util.Observable'
     },
     
     mouseDown: false,
@@ -11,12 +11,12 @@ Ext.define("GOL.controller.Grid", {
     constructor: function(rows, cols, cellFactory, rules) {
         this.model = new GOL.model.Grid(rows, cols, cellFactory, rules);
         
-        this.view = Ext.create("GOL.view.Grid", {
+        this.view = Ext.create('GOL.view.Grid', {
             model: this.model
         });
         
-        this.addEvents("generationchange");
-        this.relayEvents(this.model, ["generationchange"]);
+        this.addEvents('generationchange');
+        this.relayEvents(this.model, ['generationchange']);
         
         this.setupMouseListeners();
     },
@@ -30,10 +30,10 @@ Ext.define("GOL.controller.Grid", {
     },
     
     setupMouseListeners: function() {
-        Ext.getDoc().on("mouseup", this.onDocumentMouseUp, this);
+        Ext.getDoc().on('mouseup', this.onDocumentMouseUp, this);
 
-        this.view.on("cellmousedown", this.onCellMouseDown, this);
-        this.view.on("cellmouseover", this.onCellMouseOver, this);
+        this.view.on('cellmousedown', this.onCellMouseDown, this);
+        this.view.on('cellmouseover', this.onCellMouseOver, this);
     },
 
     getView: function() {
@@ -64,9 +64,9 @@ Ext.define("GOL.controller.Grid", {
     },
     
     destroy: function() {
-        Ext.getDoc().un("mouseup", this.onDocumentMouseUp, this);
+        Ext.getDoc().un('mouseup', this.onDocumentMouseUp, this);
         
-        this.view.un("cellmousedown", this.onCellMouseDown, this);
-        this.view.un("cellmouseover", this.onCellMouseOver, this);
+        this.view.un('cellmousedown', this.onCellMouseDown, this);
+        this.view.un('cellmouseover', this.onCellMouseOver, this);
     }
 });

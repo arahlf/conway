@@ -3,15 +3,15 @@
  * @extends Ext.Component
  * 
  * A utility class for creating an empty HTML table.  Each table cell will
- * have an auto-generated id in the format of: "{id}-{row}-{col}".
+ * have an auto-generated id in the format of: '{id}-{row}-{col}'.
  * 
  * @cfg {Number} rows (required)
  * @cfg {Number} cols (required)
  */
-Ext.define("GOL.view.Table", {
-    extend: "Ext.Component",
+Ext.define('GOL.view.Table', {
+    extend: 'Ext.Component',
     
-    autoEl: "table",
+    autoEl: 'table',
     
     renderTpl: new Ext.XTemplate('<tbody><tpl for="rows">{[this.getRowMarkup(parent, xindex -1)]}</tpl></tbody>', {
         

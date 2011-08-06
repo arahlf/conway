@@ -4,20 +4,20 @@
  * @cfg {GOL.controller.Grid} gridController
  * A Toolbar used to interact with a {@link GOL.controller.Grid}.
  */
-Ext.define("GOL.Toolbar", {
-    extend: "Ext.toolbar.Toolbar",
+Ext.define('GOL.Toolbar', {
+    extend: 'Ext.toolbar.Toolbar',
     
     /**
-     * @cfg {Number} millisPerIteration The number of milliseconds to wait between each generation when "playing". Defaults to 50.
+     * @cfg {Number} millisPerIteration The number of milliseconds to wait between each generation when 'playing'. Defaults to 50.
      */
     millisPerIteration: 50,
     
     // button iconCls configurations
-    iconClsBomb: "gol-icon-bomb",
-    iconClsRewind: "gol-icon-rewind",
-    iconClsPlay: "gol-icon-play",
-    iconClsPause: "gol-icon-pause",
-    iconClsNext: "gol-icon-next",
+    iconClsBomb: 'gol-icon-bomb',
+    iconClsRewind: 'gol-icon-rewind',
+    iconClsPlay: 'gol-icon-play',
+    iconClsPause: 'gol-icon-pause',
+    iconClsNext: 'gol-icon-next',
     
     initComponent: function() {
         Ext.apply(this, {
@@ -27,14 +27,14 @@ Ext.define("GOL.Toolbar", {
             playButton: this.createIconButton(this.iconClsPlay, this.onPlayClick),
             nextButton: this.createIconButton(this.iconClsNext, this.onNextClick),
             // menus
-            cellTypeMenu: this.createMenuButton(GOL.cell.Registry, "Cell Type", this.onCellTypeSelect, this),
-            patternMenu: this.createMenuButton(GOL.pattern.Registry, "Pattern", this.onPatternSelect, this),
+            cellTypeMenu: this.createMenuButton(GOL.cell.Registry, 'Cell Type', this.onCellTypeSelect, this),
+            patternMenu: this.createMenuButton(GOL.pattern.Registry, 'Pattern', this.onPatternSelect, this),
             // status text
             statusText: this.createStatusText()
         });
         
         this.items = this.getItems();
-        this.gridController.on("generationchange", this.updateStatusText, this);
+        this.gridController.on('generationchange', this.updateStatusText, this);
         this.callParent();
     },
     
@@ -46,7 +46,7 @@ Ext.define("GOL.Toolbar", {
     },
     
     /**
-     * Returns whether or not the Toolbar is "playing".
+     * Returns whether or not the Toolbar is 'playing'.
      * @return {Boolean}
      */
     isPlaying: function() {
@@ -54,25 +54,25 @@ Ext.define("GOL.Toolbar", {
     },
     
     createStatusText: function() {
-        return Ext.create("Ext.Component", {
+        return Ext.create('Ext.Component', {
             width: 175,
-            cls: "gol-status-text",
-            html: "Generations: 0"
+            cls: 'gol-status-text',
+            html: 'Generations: 0'
         });
     },
     
     getItems: function() {
         return [
-            this.bombButton, "-",
-            this.rewindButton, this.playButton, this.nextButton, "-",
-            this.cellTypeMenu, "-",
-            this.patternMenu, "->",
+            this.bombButton, '-',
+            this.rewindButton, this.playButton, this.nextButton, '-',
+            this.cellTypeMenu, '-',
+            this.patternMenu, '->',
             this.statusText
         ];
     },
     
     createIconButton: function(iconCls, handler) {
-        return Ext.create("Ext.button.Button", {
+        return Ext.create('Ext.button.Button', {
             iconCls: iconCls,
             handler: handler,
             scope: this
@@ -80,7 +80,7 @@ Ext.define("GOL.Toolbar", {
     },
     
     createMenuButton: function(registry, text, selectHandler, scope) {
-        return Ext.create("GOL.registry.MenuButton", {
+        return Ext.create('GOL.registry.MenuButton', {
             registry: registry,
             text: text,
             selectHandler: selectHandler,
@@ -103,7 +103,7 @@ Ext.define("GOL.Toolbar", {
     },
     
     updateStatusText: function(count) {
-        this.statusText.el.dom.innerHTML = "Generations: " + count;
+        this.statusText.el.dom.innerHTML = 'Generations: ' + count;
     },
     
     onPlayClick: function() {

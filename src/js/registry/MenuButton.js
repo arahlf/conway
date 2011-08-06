@@ -4,21 +4,21 @@
  * menu items are only created upon initialization, a future possibility
  * is to listen for store events and update the menu items accordingly.
  * @cfg {GOL.registry.Registry} registry
- * @cfg {Function} selectHandler Shortcut for adding a "select" listener.
+ * @cfg {Function} selectHandler Shortcut for adding a 'select' listener.
  */
 
 
 // probably shouldn't enforce a default value, should be injected instead
 // figure out how to add tooltips on a menu item
 
-Ext.define("GOL.registry.MenuButton", {
-    extend: "Ext.button.Button",
+Ext.define('GOL.registry.MenuButton', {
+    extend: 'Ext.button.Button',
     
     initComponent: function() {
         var menuItems = [], store = this.registry.getStore();
         
         store.each(function(register) {
-            menuItems.push({ register: register, text: register.get("name") });
+            menuItems.push({ register: register, text: register.get('name') });
         });
         
         Ext.apply(this, {
@@ -39,12 +39,12 @@ Ext.define("GOL.registry.MenuButton", {
              * @param {GOL.registry.MenuButton} this
              * @param {GOL.registry.Register} register
              */
-            "select"
+            'select'
         );
         
         // attach the shortcut listener, if present
         if (Ext.isFunction(this.selectHandler)) {
-            this.on("select", this.selectHandler, this.scope);
+            this.on('select', this.selectHandler, this.scope);
         }
         
         // assign a default value
@@ -66,10 +66,10 @@ Ext.define("GOL.registry.MenuButton", {
     setSelectedRegister: function(register, silent) {
         if (this.selectedRegister != register) {
             this.selectedRegister = register;
-            this.setText(this.labelText + ": " + register.getName());
+            this.setText(this.labelText + ': ' + register.getName());
             
             if (!silent) {
-                this.fireEvent("select", this, register);
+                this.fireEvent('select', this, register);
             }
         }
     },

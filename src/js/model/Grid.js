@@ -2,10 +2,10 @@
  * @class GOL.model.Grid
  * The Grid model.
  */
-Ext.define("GOL.model.Grid", {
+Ext.define('GOL.model.Grid', {
     
     mixins: {
-        observable: "Ext.util.Observable"
+        observable: 'Ext.util.Observable'
     },
     
     /**
@@ -27,12 +27,12 @@ Ext.define("GOL.model.Grid", {
              * @event generationchange
              * @param {Number} count The new generation count.
              */
-            "generationchange",
+            'generationchange',
             
             /**
              * @event reconfigure
              */
-            "reconfigure"
+            'reconfigure'
         );
         
         this.configure(cellFactory);
@@ -64,7 +64,7 @@ Ext.define("GOL.model.Grid", {
         
         this.configure(cellFactory);
         
-        this.fireEvent("reconfigure");
+        this.fireEvent('reconfigure');
     },
     
     assignCellNeighbors: function(cell) {
@@ -99,7 +99,7 @@ Ext.define("GOL.model.Grid", {
     killAllCells: function() {
         this.compositeCell.kill().commit();
         
-        this.fireEvent("generationchange", (this.generations = 0));
+        this.fireEvent('generationchange', (this.generations = 0));
     },
     
     /**
@@ -123,7 +123,7 @@ Ext.define("GOL.model.Grid", {
         
         this.compositeCell.commit();
         
-        this.fireEvent("generationchange", ++this.generations);
+        this.fireEvent('generationchange', ++this.generations);
     },
     
     /**

@@ -1,4 +1,4 @@
-Ext.ns("GOL.cell");
+Ext.ns('GOL.cell');
 
 /**
  * @class GOL.cell.Registry

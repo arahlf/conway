@@ -1,8 +1,8 @@
 /**
  * An abstract base class for Cells that provides common/shared functionality.
  */
-Ext.define("GOL.model.AbstractCell", {
-    extend: "GOL.model.Cell",
+Ext.define('GOL.model.AbstractCell', {
+    extend: 'GOL.model.Cell',
     
     constructor: function(row, col) {
         this.row = row;
@@ -24,7 +24,7 @@ Ext.define("GOL.model.AbstractCell", {
      */
     commit: function() {
         this.onCommit();
-        this.fireEvent("commit", this);
+        this.fireEvent('commit', this);
         return this;
     },
 

@@ -7,7 +7,7 @@ GOL = {
      * This is used to better simulate interfaces/abstract classes.
      */
     abstractFn: function() {
-        throw new Error("Abstract function called directly.");
+        throw new Error('Abstract function called directly.');
     },
     
     /**
@@ -17,7 +17,7 @@ GOL = {
      */
     unsupportedFn: function(message) {
         return function() {
-            throw new Error("Unsupported operation: " + message);
+            throw new Error('Unsupported operation: ' + message);
         };
     }
 };
@@ -26,8 +26,8 @@ GOL = {
  * @class GOL.Application
  * @extends Ext.window.Window
  */
-Ext.define("GOL.Application", {
-    extend: "Ext.window.Window",
+Ext.define('GOL.Application', {
+    extend: 'Ext.window.Window',
     
     closable: false,
     constrain: true,
@@ -45,14 +45,14 @@ Ext.define("GOL.Application", {
         var view = this.gridController.getView();
         
         // disable the toolbar while loading
-        view.on("beforeload", this.toolbar.disable, this.toolbar);
-        view.on("load", this.toolbar.enable, this.toolbar);
+        view.on('beforeload', this.toolbar.disable, this.toolbar);
+        view.on('load', this.toolbar.enable, this.toolbar);
 
         Ext.apply(this, {
-            title: "Conway's Game of Life",
+            title: 'Conway\'s Game of Life',
             items: view,
             tools: [{
-                type: "help",
+                type: 'help',
                 handler: this.showHelp,
                 scope: this
             }],
@@ -70,7 +70,7 @@ Ext.define("GOL.Application", {
     },
 
     createToolbar: function() {
-        return Ext.create("GOL.Toolbar", {
+        return Ext.create('GOL.Toolbar', {
             gridController: this.gridController
         });
     },
@@ -82,15 +82,15 @@ Ext.define("GOL.Application", {
         var wikiLink = '<a href="http://en.wikipedia.org/wiki/Conways_Game_of_Life" target="_blank">Wikipedia</a>';
 
         Ext.Msg.show({
-            title: "Help",
+            title: 'Help',
             buttons: Ext.MessageBox.OK,
             icon: Ext.MessageBox.QUESTION,
             width: 450,
-            msg: "A implementation of Conway's Game of Life using JavaScript and Ext JS 4 in the MVC paradigm.<br /><br />" +
-                 "<p>For details behind Conway's Game of Life, see " + wikiLink + ".<br /><br />" +
-                 "<p>Directions: Use the controls on the bottom toolbar to configure the grid. " +
-                 "Click and drag over Cells to bring them back to life.<br /><br />" +
-                 "By: Alan Rahlf"
+            msg: 'A implementation of Conway\'s Game of Life using JavaScript and Ext JS 4 in the MVC paradigm.<br /><br />' +
+                 '<p>For details behind Conway\'s Game of Life, see ' + wikiLink + '.<br /><br />' +
+                 '<p>Directions: Use the controls on the bottom toolbar to configure the grid. ' +
+                 'Click and drag over Cells to bring them back to life.<br /><br />' +
+                 'By: Alan Rahlf'
         });
     }
 });
@@ -100,20 +100,20 @@ Ext.define("GOL.Application", {
  * @cfg {GOL.controller.Grid} gridController
  * A Toolbar used to interact with a {@link GOL.controller.Grid}.
  */
-Ext.define("GOL.Toolbar", {
-    extend: "Ext.toolbar.Toolbar",
+Ext.define('GOL.Toolbar', {
+    extend: 'Ext.toolbar.Toolbar',
     
     /**
-     * @cfg {Number} millisPerIteration The number of milliseconds to wait between each generation when "playing". Defaults to 50.
+     * @cfg {Number} millisPerIteration The number of milliseconds to wait between each generation when 'playing'. Defaults to 50.
      */
     millisPerIteration: 50,
     
     // button iconCls configurations
-    iconClsBomb: "gol-icon-bomb",
-    iconClsRewind: "gol-icon-rewind",
-    iconClsPlay: "gol-icon-play",
-    iconClsPause: "gol-icon-pause",
-    iconClsNext: "gol-icon-next",
+    iconClsBomb: 'gol-icon-bomb',
+    iconClsRewind: 'gol-icon-rewind',
+    iconClsPlay: 'gol-icon-play',
+    iconClsPause: 'gol-icon-pause',
+    iconClsNext: 'gol-icon-next',
     
     initComponent: function() {
         Ext.apply(this, {
@@ -123,14 +123,14 @@ Ext.define("GOL.Toolbar", {
             playButton: this.createIconButton(this.iconClsPlay, this.onPlayClick),
             nextButton: this.createIconButton(this.iconClsNext, this.onNextClick),
             // menus
-            cellTypeMenu: this.createMenuButton(GOL.cell.Registry, "Cell Type", this.onCellTypeSelect, this),
-            patternMenu: this.createMenuButton(GOL.pattern.Registry, "Pattern", this.onPatternSelect, this),
+            cellTypeMenu: this.createMenuButton(GOL.cell.Registry, 'Cell Type', this.onCellTypeSelect, this),
+            patternMenu: this.createMenuButton(GOL.pattern.Registry, 'Pattern', this.onPatternSelect, this),
             // status text
             statusText: this.createStatusText()
         });
         
         this.items = this.getItems();
-        this.gridController.on("generationchange", this.updateStatusText, this);
+        this.gridController.on('generationchange', this.updateStatusText, this);
         this.callParent();
     },
     
@@ -142,7 +142,7 @@ Ext.define("GOL.Toolbar", {
     },
     
     /**
-     * Returns whether or not the Toolbar is "playing".
+     * Returns whether or not the Toolbar is 'playing'.
      * @return {Boolean}
      */
     isPlaying: function() {
@@ -150,25 +150,25 @@ Ext.define("GOL.Toolbar", {
     },
     
     createStatusText: function() {
-        return Ext.create("Ext.Component", {
+        return Ext.create('Ext.Component', {
             width: 175,
-            cls: "gol-status-text",
-            html: "Generations: 0"
+            cls: 'gol-status-text',
+            html: 'Generations: 0'
         });
     },
     
     getItems: function() {
         return [
-            this.bombButton, "-",
-            this.rewindButton, this.playButton, this.nextButton, "-",
-            this.cellTypeMenu, "-",
-            this.patternMenu, "->",
+            this.bombButton, '-',
+            this.rewindButton, this.playButton, this.nextButton, '-',
+            this.cellTypeMenu, '-',
+            this.patternMenu, '->',
             this.statusText
         ];
     },
     
     createIconButton: function(iconCls, handler) {
-        return Ext.create("Ext.button.Button", {
+        return Ext.create('Ext.button.Button', {
             iconCls: iconCls,
             handler: handler,
             scope: this
@@ -176,7 +176,7 @@ Ext.define("GOL.Toolbar", {
     },
     
     createMenuButton: function(registry, text, selectHandler, scope) {
-        return Ext.create("GOL.registry.MenuButton", {
+        return Ext.create('GOL.registry.MenuButton', {
             registry: registry,
             text: text,
             selectHandler: selectHandler,
@@ -199,7 +199,7 @@ Ext.define("GOL.Toolbar", {
     },
     
     updateStatusText: function(count) {
-        this.statusText.el.dom.innerHTML = "Generations: " + count;
+        this.statusText.el.dom.innerHTML = 'Generations: ' + count;
     },
     
     onPlayClick: function() {
@@ -242,7 +242,7 @@ Ext.define("GOL.Toolbar", {
  *
  * An interface for rules.
  */
-Ext.define("GOL.rules.Rules", {
+Ext.define('GOL.rules.Rules', {
     /**
      * Applies the rules to a Cell.
      * @param {GOL.model.Cell} cell
@@ -257,8 +257,8 @@ Ext.define("GOL.rules.Rules", {
  * three neighbors live on, any others die.  A dead cell with exactly 3
  * neighbors is reborn.
  */
-Ext.define("GOL.rules.StandardRules", {
-    extend: "GOL.rules.Rules",
+Ext.define('GOL.rules.StandardRules', {
+    extend: 'GOL.rules.Rules',
 
     /**
      * {@link GOL.rules.Rules#applyRules} implementation
@@ -286,28 +286,28 @@ Ext.define("GOL.rules.StandardRules", {
  * @extends Ext.data.Model
  * An entry in a Registry, representing a simple name/value pair.
  */
-Ext.define("GOL.registry.Register", {
-    extend: "Ext.data.Model",
-    fields: ["name", "value"],
+Ext.define('GOL.registry.Register', {
+    extend: 'Ext.data.Model',
+    fields: ['name', 'value'],
     
     getName: function() {
-        return this.get("name");
+        return this.get('name');
     },
     
     getValue: function() {
-        return this.get("value");
+        return this.get('value');
     }
 });
 /**
  * @class GOL.registry.Registry
  */
-Ext.define("GOL.registry.Registry", {
+Ext.define('GOL.registry.Registry', {
     /**
      * @constructor
      */
     constructor: function() {
         this.store = new Ext.data.Store({
-            model: "GOL.registry.Register"
+            model: 'GOL.registry.Register'
         });
     },
 
@@ -340,21 +340,21 @@ Ext.define("GOL.registry.Registry", {
  * menu items are only created upon initialization, a future possibility
  * is to listen for store events and update the menu items accordingly.
  * @cfg {GOL.registry.Registry} registry
- * @cfg {Function} selectHandler Shortcut for adding a "select" listener.
+ * @cfg {Function} selectHandler Shortcut for adding a 'select' listener.
  */
 
 
 // probably shouldn't enforce a default value, should be injected instead
 // figure out how to add tooltips on a menu item
 
-Ext.define("GOL.registry.MenuButton", {
-    extend: "Ext.button.Button",
+Ext.define('GOL.registry.MenuButton', {
+    extend: 'Ext.button.Button',
     
     initComponent: function() {
         var menuItems = [], store = this.registry.getStore();
         
         store.each(function(register) {
-            menuItems.push({ register: register, text: register.get("name") });
+            menuItems.push({ register: register, text: register.get('name') });
         });
         
         Ext.apply(this, {
@@ -375,12 +375,12 @@ Ext.define("GOL.registry.MenuButton", {
              * @param {GOL.registry.MenuButton} this
              * @param {GOL.registry.Register} register
              */
-            "select"
+            'select'
         );
         
         // attach the shortcut listener, if present
         if (Ext.isFunction(this.selectHandler)) {
-            this.on("select", this.selectHandler, this.scope);
+            this.on('select', this.selectHandler, this.scope);
         }
         
         // assign a default value
@@ -402,10 +402,10 @@ Ext.define("GOL.registry.MenuButton", {
     setSelectedRegister: function(register, silent) {
         if (this.selectedRegister != register) {
             this.selectedRegister = register;
-            this.setText(this.labelText + ": " + register.getName());
+            this.setText(this.labelText + ': ' + register.getName());
             
             if (!silent) {
-                this.fireEvent("select", this, register);
+                this.fireEvent('select', this, register);
             }
         }
     },
@@ -419,7 +419,7 @@ Ext.define("GOL.registry.MenuButton", {
  * @class GOL.pattern.Pattern
  * An interface for patterns.
  */
-Ext.define("GOL.pattern.Pattern", {
+Ext.define('GOL.pattern.Pattern', {
     /**
      * Applies the pattern to the specified Grid.
      * @param {GOL.model.Grid} grid
@@ -430,8 +430,8 @@ Ext.define("GOL.pattern.Pattern", {
  * @class GOL.pattern.AbstractCoordinatePattern
  * @extends GOL.pattern.Pattern
  */
-Ext.define("GOL.pattern.AbstractCoordinatePattern", {
-    extend: "GOL.pattern.Pattern",
+Ext.define('GOL.pattern.AbstractCoordinatePattern', {
+    extend: 'GOL.pattern.Pattern',
     
     /**
      * Applies a set of coordinates to a Grid model.
@@ -448,7 +448,7 @@ Ext.define("GOL.pattern.AbstractCoordinatePattern", {
         }
     }
 });
-Ext.ns("GOL.pattern");
+Ext.ns('GOL.pattern');
 
 /**
  * @class GOL.pattern.Registry
@@ -466,8 +466,8 @@ GOL.registerPattern = Ext.bind(GOL.pattern.Registry.register, GOL.pattern.Regist
  * @class GOL.pattern.Random
  * @extends GOL.pattern.Pattern A pattern that randomly (50/50) either kills or revives a Cell.
  */
-Ext.define("GOL.pattern.Random", {
-    extend: "GOL.pattern.Pattern",
+Ext.define('GOL.pattern.Random', {
+    extend: 'GOL.pattern.Pattern',
     
     /**
      * {@link GOL.pattern.Pattern#applyPattern} implementation
@@ -485,13 +485,13 @@ Ext.define("GOL.pattern.Random", {
     }
 });
 
-GOL.registerPattern("Random", new GOL.pattern.Random());
+GOL.registerPattern('Random', new GOL.pattern.Random());
 /**
  * @class GOL.pattern.Beacon
  * @extends GOL.pattern.Pattern
  */
-Ext.define("GOL.pattern.Beacon", {
-    extend: "GOL.pattern.AbstractCoordinatePattern",
+Ext.define('GOL.pattern.Beacon', {
+    extend: 'GOL.pattern.AbstractCoordinatePattern',
     
     /**
      * {@link GOL.pattern.Pattern#applyPattern} implementation
@@ -511,13 +511,13 @@ Ext.define("GOL.pattern.Beacon", {
     }
 });
 
-GOL.registerPattern("Beacon", new GOL.pattern.Beacon());
+GOL.registerPattern('Beacon', new GOL.pattern.Beacon());
 /**
  * @class GOL.pattern.Glider
  * @extends GOL.pattern.Pattern
  */
-Ext.define("GOL.pattern.Glider", {
-    extend: "GOL.pattern.AbstractCoordinatePattern",
+Ext.define('GOL.pattern.Glider', {
+    extend: 'GOL.pattern.AbstractCoordinatePattern',
     
     /**
      * {@link GOL.pattern.Pattern#applyPattern} implementation
@@ -535,13 +535,13 @@ Ext.define("GOL.pattern.Glider", {
     }
 });
 
-GOL.registerPattern("Glider", new GOL.pattern.Glider());
+GOL.registerPattern('Glider', new GOL.pattern.Glider());
 /**
  * @class GOL.pattern.GliderGun
  * @extends GOL.pattern.Pattern
  */
-Ext.define("GOL.pattern.GliderGun", {
-    extend: "GOL.pattern.AbstractCoordinatePattern",
+Ext.define('GOL.pattern.GliderGun', {
+    extend: 'GOL.pattern.AbstractCoordinatePattern',
     
     /**
      * {@link GOL.pattern.Pattern#applyPattern} implementation
@@ -590,13 +590,13 @@ Ext.define("GOL.pattern.GliderGun", {
     }
 });
 
-GOL.registerPattern("Glider Gun", new GOL.pattern.GliderGun());
+GOL.registerPattern('Glider Gun', new GOL.pattern.GliderGun());
 /**
  * @class GOL.pattern.LWSS
  * @extends GOL.pattern.Pattern
  */
-Ext.define("GOL.pattern.LWSS", {
-    extend: "GOL.pattern.AbstractCoordinatePattern",
+Ext.define('GOL.pattern.LWSS', {
+    extend: 'GOL.pattern.AbstractCoordinatePattern',
     
     /**
      * {@link GOL.pattern.Pattern#applyPattern} implementation
@@ -618,13 +618,13 @@ Ext.define("GOL.pattern.LWSS", {
     }
 });
 
-GOL.registerPattern("LWSS", new GOL.pattern.LWSS());
+GOL.registerPattern('LWSS', new GOL.pattern.LWSS());
 /**
  * @class GOL.pattern.Pulsar
  * @extends GOL.pattern.Pattern
  */
-Ext.define("GOL.pattern.Pulsar", {
-    extend: "GOL.pattern.AbstractCoordinatePattern",
+Ext.define('GOL.pattern.Pulsar', {
+    extend: 'GOL.pattern.AbstractCoordinatePattern',
     
     /**
      * {@link GOL.pattern.Pattern#applyPattern} implementation
@@ -694,16 +694,16 @@ Ext.define("GOL.pattern.Pulsar", {
     }
 });
 
-GOL.registerPattern("Pulsar", new GOL.pattern.Pulsar());
+GOL.registerPattern('Pulsar', new GOL.pattern.Pulsar());
 
 /**
  * @class GOL.model.Grid
  * The Grid model.
  */
-Ext.define("GOL.model.Grid", {
+Ext.define('GOL.model.Grid', {
     
     mixins: {
-        observable: "Ext.util.Observable"
+        observable: 'Ext.util.Observable'
     },
     
     /**
@@ -725,12 +725,12 @@ Ext.define("GOL.model.Grid", {
              * @event generationchange
              * @param {Number} count The new generation count.
              */
-            "generationchange",
+            'generationchange',
             
             /**
              * @event reconfigure
              */
-            "reconfigure"
+            'reconfigure'
         );
         
         this.configure(cellFactory);
@@ -762,7 +762,7 @@ Ext.define("GOL.model.Grid", {
         
         this.configure(cellFactory);
         
-        this.fireEvent("reconfigure");
+        this.fireEvent('reconfigure');
     },
     
     assignCellNeighbors: function(cell) {
@@ -797,7 +797,7 @@ Ext.define("GOL.model.Grid", {
     killAllCells: function() {
         this.compositeCell.kill().commit();
         
-        this.fireEvent("generationchange", (this.generations = 0));
+        this.fireEvent('generationchange', (this.generations = 0));
     },
     
     /**
@@ -821,7 +821,7 @@ Ext.define("GOL.model.Grid", {
         
         this.compositeCell.commit();
         
-        this.fireEvent("generationchange", ++this.generations);
+        this.fireEvent('generationchange', ++this.generations);
     },
     
     /**
@@ -836,9 +836,9 @@ Ext.define("GOL.model.Grid", {
 /**
  * An interface for Cells.
  */
-Ext.define("GOL.model.Cell", {
+Ext.define('GOL.model.Cell', {
     mixins: {
-        observable: "Ext.util.Observable"
+        observable: 'Ext.util.Observable'
     },
 
     constructor: function() {
@@ -848,7 +848,7 @@ Ext.define("GOL.model.Cell", {
              * Fired when the Cell's temporary state is committed.
              * @param {GOL.cells.Cell} this
              */
-            "commit"
+            'commit'
         );
     },
 
@@ -865,7 +865,7 @@ Ext.define("GOL.model.Cell", {
     getCol: GOL.abstractFn,
 
     /**
-     * Commits the temporary state of the Cell and fires the "commit" event.
+     * Commits the temporary state of the Cell and fires the 'commit' event.
      * @return {GOL.cells.Cell} this
      */
     commit: GOL.abstractFn,
@@ -920,8 +920,8 @@ Ext.define("GOL.model.Cell", {
 /**
  * An abstract base class for Cells that provides common/shared functionality.
  */
-Ext.define("GOL.model.AbstractCell", {
-    extend: "GOL.model.Cell",
+Ext.define('GOL.model.AbstractCell', {
+    extend: 'GOL.model.Cell',
     
     constructor: function(row, col) {
         this.row = row;
@@ -943,7 +943,7 @@ Ext.define("GOL.model.AbstractCell", {
      */
     commit: function() {
         this.onCommit();
-        this.fireEvent("commit", this);
+        this.fireEvent('commit', this);
         return this;
     },
 
@@ -983,11 +983,11 @@ Ext.define("GOL.model.AbstractCell", {
  * @constructor
  * @param {Array} cells An array of cell models.
  *
- * Serves as a <a href="http://en.wikipedia.org/wiki/Composite_pattern">composite</a>
+ * Serves as a <a href='http://en.wikipedia.org/wiki/Composite_pattern'>composite</a>
  * of Cell model objects.
  */
-Ext.define("GOL.model.CompositeCell", {
-    extend: "GOL.model.Cell",
+Ext.define('GOL.model.CompositeCell', {
+    extend: 'GOL.model.Cell',
     
     constructor: function(cells) {
         this.callParent();
@@ -1014,19 +1014,19 @@ Ext.define("GOL.model.CompositeCell", {
     },
     
     kill: function() {
-        return this.forEachCell("kill");
+        return this.forEachCell('kill');
     },
     
     revive: function() {
-        return this.forEachCell("revive");
+        return this.forEachCell('revive');
     },
     
     persist: function() {
-        return this.forEachCell("persist");
+        return this.forEachCell('persist');
     },
     
     commit: function() {
-        return this.forEachCell("commit");
+        return this.forEachCell('commit');
     },
     
     /**
@@ -1045,12 +1045,12 @@ Ext.define("GOL.model.CompositeCell", {
     },
     
     // unsupported methods
-    getRow: GOL.unsupportedFn("CompositeCell.getRow"),
-    getCol: GOL.unsupportedFn("CompositeCell.getCol"),
-    getAliveNeighborsCount: GOL.unsupportedFn("CompositeCell.getAliveNeighborsCount"),
-    setNeighbors: GOL.unsupportedFn("CompositeCell.setNeighbors"),
-    getAge: GOL.unsupportedFn("CompositeCell.getAge"),
-    isAlive: GOL.unsupportedFn("CompositeCell.isAlive")
+    getRow: GOL.unsupportedFn('CompositeCell.getRow'),
+    getCol: GOL.unsupportedFn('CompositeCell.getCol'),
+    getAliveNeighborsCount: GOL.unsupportedFn('CompositeCell.getAliveNeighborsCount'),
+    setNeighbors: GOL.unsupportedFn('CompositeCell.setNeighbors'),
+    getAge: GOL.unsupportedFn('CompositeCell.getAge'),
+    isAlive: GOL.unsupportedFn('CompositeCell.isAlive')
 });
 
 /**
@@ -1059,8 +1059,8 @@ Ext.define("GOL.model.CompositeCell", {
  *
  * Simple Cell implementation that is either dead or alive.
  */
-Ext.define("GOL.model.BinaryCell", {
-    extend: "GOL.model.AbstractCell",
+Ext.define('GOL.model.BinaryCell', {
+    extend: 'GOL.model.AbstractCell',
 
     alive: false,
     tempAlive: false,
@@ -1097,8 +1097,8 @@ Ext.define("GOL.model.BinaryCell", {
  * 
  * A Cell implementation that keeps track of its age.
  */
-Ext.define("GOL.model.AgingCell", {
-    extend: "GOL.model.AbstractCell",
+Ext.define('GOL.model.AgingCell', {
+    extend: 'GOL.model.AbstractCell',
     
     age: 0,
     tempAge: 0,
@@ -1138,8 +1138,8 @@ Ext.define("GOL.model.AgingCell", {
  * 
  * A Cell implementation that keeps track of its age.
  */
-Ext.define("GOL.model.RainbowCell", {
-    extend: "GOL.model.AgingCell",
+Ext.define('GOL.model.RainbowCell', {
+    extend: 'GOL.model.AgingCell',
     
     MAX_AGE: 7,
     
@@ -1150,7 +1150,7 @@ Ext.define("GOL.model.RainbowCell", {
         return this;
     }
 });
-Ext.ns("GOL.cell");
+Ext.ns('GOL.cell');
 
 /**
  * @class GOL.cell.Registry
@@ -1164,7 +1164,7 @@ GOL.cell.Registry = new GOL.registry.Registry();
  * @method registerCellFactory
  */
 GOL.registerCellFactory = Ext.bind(GOL.cell.Registry.register, GOL.cell.Registry);
-Ext.define("GOL.model.factory.CellFactory", {
+Ext.define('GOL.model.factory.CellFactory', {
     /**
      * Creates a new Cell model.
      * @param {Number} row
@@ -1172,35 +1172,35 @@ Ext.define("GOL.model.factory.CellFactory", {
      */
     createCell: GOL.abstractFn
 });
-Ext.define("GOL.model.factory.AgingCellFactory", {
-    extend: "GOL.model.factory.CellFactory",
+Ext.define('GOL.model.factory.AgingCellFactory', {
+    extend: 'GOL.model.factory.CellFactory',
     
     createModel: function(row, col) {
         return new GOL.model.AgingCell(row, col);
     }
 });
 
-GOL.registerCellFactory("Aging", new GOL.model.factory.AgingCellFactory());
-Ext.define("GOL.model.factory.BinaryCellFactory", {
-    extend: "GOL.model.factory.CellFactory",
+GOL.registerCellFactory('Aging', new GOL.model.factory.AgingCellFactory());
+Ext.define('GOL.model.factory.BinaryCellFactory', {
+    extend: 'GOL.model.factory.CellFactory',
     
     createModel: function(row, col) {
         return new GOL.model.BinaryCell(row, col);
     }
 });
 
-GOL.registerCellFactory("Binary", new GOL.model.factory.BinaryCellFactory());
-Ext.define("GOL.model.factory.RainbowCellFactory", {
-    extend: "GOL.model.factory.CellFactory",
+GOL.registerCellFactory('Binary', new GOL.model.factory.BinaryCellFactory());
+Ext.define('GOL.model.factory.RainbowCellFactory', {
+    extend: 'GOL.model.factory.CellFactory',
     
     createModel: function(row, col) {
         return new GOL.model.RainbowCell(row, col);
     }
 });
 
-GOL.registerCellFactory("Rainbow", new GOL.model.factory.RainbowCellFactory());
-Ext.define("GOL.model.factory.RandomCellFactory", {
-    extend: "GOL.model.factory.CellFactory",
+GOL.registerCellFactory('Rainbow', new GOL.model.factory.RainbowCellFactory());
+Ext.define('GOL.model.factory.RandomCellFactory', {
+    extend: 'GOL.model.factory.CellFactory',
     
     createModel: function(row, col) {
         switch (Math.ceil(Math.random() * 3)) {
@@ -1214,22 +1214,22 @@ Ext.define("GOL.model.factory.RandomCellFactory", {
     }
 });
 
-GOL.registerCellFactory("Random", new GOL.model.factory.RandomCellFactory());
+GOL.registerCellFactory('Random', new GOL.model.factory.RandomCellFactory());
 
 /**
  * @class GOL.view.Table
  * @extends Ext.Component
  * 
  * A utility class for creating an empty HTML table.  Each table cell will
- * have an auto-generated id in the format of: "{id}-{row}-{col}".
+ * have an auto-generated id in the format of: '{id}-{row}-{col}'.
  * 
  * @cfg {Number} rows (required)
  * @cfg {Number} cols (required)
  */
-Ext.define("GOL.view.Table", {
-    extend: "Ext.Component",
+Ext.define('GOL.view.Table', {
+    extend: 'Ext.Component',
     
-    autoEl: "table",
+    autoEl: 'table',
     
     renderTpl: new Ext.XTemplate('<tbody><tpl for="rows">{[this.getRowMarkup(parent, xindex -1)]}</tpl></tbody>', {
         
@@ -1260,8 +1260,8 @@ Ext.define("GOL.view.Table", {
  * @extends Ext.container.Container
  * @cfg {GOL.model.Grid} model The Grid's model.
  */
-Ext.define("GOL.view.Grid", {
-    extend: "Ext.container.Container",
+Ext.define('GOL.view.Grid', {
+    extend: 'Ext.container.Container',
     
     cellSize: 12,
     mouseDown: false,
@@ -1274,34 +1274,34 @@ Ext.define("GOL.view.Grid", {
             cellControllers: [],
             width: this.cellSize * this.model.getCols(),
             height: this.cellSize * this.model.getRows(),
-            layout: "card",
+            layout: 'card',
             activeItem: 0,
             items: [this.loadingView, this.gridView]
         });
         
-        this.model.on("reconfigure", this.onReconfigure, this);
+        this.model.on('reconfigure', this.onReconfigure, this);
         
         this.callParent();
     },
     
     createLoadingView: function() {
-        return Ext.create("widget.container", {
+        return Ext.create('widget.container', {
             layout: {
-                type: "hbox",
-                pack: "center",
-                align: "middle"
+                type: 'hbox',
+                pack: 'center',
+                align: 'middle'
             },
             items: {
-                xtype: "progressbar",
+                xtype: 'progressbar',
                 animate: false,
-                text: "Loading...",
+                text: 'Loading...',
                 width: 300
             }
         });
     },
     
     createGridView: function() {
-        return Ext.create("GOL.view.Table", {
+        return Ext.create('GOL.view.Table', {
             cls: 'gol-grid',
             rows: this.model.getRows(),
             cols: this.model.getCols()
@@ -1314,17 +1314,17 @@ Ext.define("GOL.view.Grid", {
         this.loadedRows = 0;
         
         Ext.defer(function() {
-            this.fireEvent("beforeload");
+            this.fireEvent('beforeload');
             
-            this.gridView.el.on("mousedown", this.onTableCellMouseDown, this, { delegate: "td" });
-            this.gridView.el.on("mouseover", this.onTableCellMouseOver, this, { delegate: "td" });
+            this.gridView.el.on('mousedown', this.onTableCellMouseDown, this, { delegate: 'td' });
+            this.gridView.el.on('mouseover', this.onTableCellMouseOver, this, { delegate: 'td' });
             
             Ext.defer(this.addRow, 50, this);
         }, 100, this);
     },
     
     onReconfigure: function() {
-        this.fireEvent("beforeload");
+        this.fireEvent('beforeload');
         this.getLayout().setActiveItem(this.loadingView);
         
         this.loadedRows = 0;
@@ -1337,7 +1337,7 @@ Ext.define("GOL.view.Grid", {
     
     addRow: function() {
         var model = this.model;
-        var tableCells = this.gridView.el.select("tr:nth(" + (this.loadedRows + 1) + ") td");
+        var tableCells = this.gridView.el.select('tr:nth(' + (this.loadedRows + 1) + ') td');
         var row = [];
         
         tableCells.each(function(tableCell, composite, index) {
@@ -1348,30 +1348,30 @@ Ext.define("GOL.view.Grid", {
         this.cellControllers.push(row);
         this.loadedRows++;
         
-        this.loadingView.down("progressbar").updateProgress(this.loadedRows / model.getRows());
+        this.loadingView.down('progressbar').updateProgress(this.loadedRows / model.getRows());
         
         if (this.loadedRows < model.getRows()) {
             Ext.Function.defer(this.addRow, 10, this);
         }
         else {
             this.getLayout().setActiveItem(this.gridView);
-            this.fireEvent("load"); // TODO document events
+            this.fireEvent('load'); // TODO document events
         }
     },
     
     onTableCellMouseDown: function(event, target) {
         event.preventDefault();
-        this.fireEvent("cellmousedown", this.getCellFromTarget(target));
+        this.fireEvent('cellmousedown', this.getCellFromTarget(target));
         
     },
     
     onTableCellMouseOver: function(event, target) {
         event.preventDefault();
-        this.fireEvent("cellmouseover", this.getCellFromTarget(target));
+        this.fireEvent('cellmouseover', this.getCellFromTarget(target));
     },
     
     getCellFromTarget: function(target) {
-        var match = target.id.match(/-(\d+)-(\d+)$/); // ex: id="ext-comp-1015-cell-12-4"
+        var match = target.id.match(/-(\d+)-(\d+)$/); // ex: id='ext-comp-1015-cell-12-4'
         
         return this.cellControllers[parseInt(match[1], 10)][parseInt(match[2], 10)];
     },
@@ -1384,10 +1384,10 @@ Ext.define("GOL.view.Grid", {
 /**
  * @class GOL.view.Cell
  */
-Ext.define("GOL.view.Cell", {
+Ext.define('GOL.view.Cell', {
     
     mixins: {
-        observable: "Ext.util.Observable"
+        observable: 'Ext.util.Observable'
     },
     
     constructor: function(model, el) {
@@ -1395,7 +1395,7 @@ Ext.define("GOL.view.Cell", {
         
         this.el = el;
         this.model = model;
-        this.model.on("commit", this.updateView, this);
+        this.model.on('commit', this.updateView, this);
         this.updateView();
     },
     
@@ -1418,7 +1418,7 @@ Ext.define("GOL.view.Cell", {
     destroy: function() {
         var me = this;
         me.clearListeners();
-        me.el.dom.className = "";
+        me.el.dom.className = '';
         me.el = null;
         me.model = null;
     },
@@ -1435,11 +1435,11 @@ Ext.define("GOL.view.Cell", {
  * @constructor
  * @param {GOL.model.Cell} model A cell model.
  */
-Ext.define("GOL.view.BinaryCell", {
-    extend: "GOL.view.Cell",
+Ext.define('GOL.view.BinaryCell', {
+    extend: 'GOL.view.Cell',
     
-    aliveCls: "gol-cell-alive",
-    deadCls: "gol-cell-dead",
+    aliveCls: 'gol-cell-alive',
+    deadCls: 'gol-cell-dead',
     
     updateView: function() {
         // profiler shows directly setting the DOM className is at
@@ -1461,19 +1461,19 @@ Ext.define("GOL.view.BinaryCell", {
  * @constructor
  * @param {GOL.model.Cell} model A cell model.
  */
-Ext.define("GOL.view.AgingCell", {
-    extend: "GOL.view.Cell",
+Ext.define('GOL.view.AgingCell', {
+    extend: 'GOL.view.Cell',
     
     updateView: function() {
         var dom = this.getEl().dom;
         
         if (this.model.isAlive()) {
-            dom.className = "gol-cell-alive gol-cell-aging";
+            dom.className = 'gol-cell-alive gol-cell-aging';
             dom.style.backgroundColor = this.getAgeAsColor();
         }
         else {
-            dom.className = "gol-cell-dead";
-            dom.style.backgroundColor = "transparent";
+            dom.className = 'gol-cell-dead';
+            dom.style.backgroundColor = 'transparent';
         }
     },
 
@@ -1483,11 +1483,11 @@ Ext.define("GOL.view.AgingCell", {
     getAgeAsColor: function() {
         var code = Math.max(255 - (this.getModel().getAge() * 15), 75);
         
-        return Ext.String.format("rgb({0}, {1}, {2})", code, code, code);
+        return Ext.String.format('rgb({0}, {1}, {2})', code, code, code);
     },
     
     destroy: function() {
-        this.getEl().dom.style.backgroundColor = "transparent";
+        this.getEl().dom.style.backgroundColor = 'transparent';
         this.callParent();
     }
 });
@@ -1497,34 +1497,34 @@ Ext.define("GOL.view.AgingCell", {
  * @constructor
  * @param {GOL.model.Cell} model A cell model.
  */
-Ext.define("GOL.view.RainbowCell", {
-    extend: "GOL.view.AgingCell",
+Ext.define('GOL.view.RainbowCell', {
+    extend: 'GOL.view.AgingCell',
     
-    colors: ["#dd0000", "#fe6230", "#fef600", "#00bc00", "#009bfe", "#000083", "#30009b"],
+    colors: ['#dd0000', '#fe6230', '#fef600', '#00bc00', '#009bfe', '#000083', '#30009b'],
     
     getAgeAsColor: function() {
         return this.colors[this.model.getAge() - 1];
     }
 });
-Ext.ns("GOL.view");
+Ext.ns('GOL.view');
 
 GOL.view.CellFactory = {
     /**
      * Determines and creates the appropriate view for the given model.
      */
     create: function(model, renderTo) {
-        var name = model.$className.replace(/^GOL\.model/, "GOL.view");
+        var name = model.$className.replace(/^GOL\.model/, 'GOL.view');
         var constructor = Ext.ClassManager.get(name);
         
         if (constructor !== null) {
             return new constructor(model, renderTo);
         }
         
-        throw new Error("Could not determine view for model of type: " + model.$className);
+        throw new Error('Could not determine view for model of type: ' + model.$className);
     }
 };
 
-Ext.define("GOL.controller.Cell", {
+Ext.define('GOL.controller.Cell', {
 
     constructor: function(model, renderTo) {
         this.model = model;
@@ -1558,9 +1558,9 @@ Ext.define("GOL.controller.Cell", {
 /**
  * @class GOL.controller.Grid
  */
-Ext.define("GOL.controller.Grid", {
+Ext.define('GOL.controller.Grid', {
     mixins: {
-        observable: "Ext.util.Observable"
+        observable: 'Ext.util.Observable'
     },
     
     mouseDown: false,
@@ -1568,12 +1568,12 @@ Ext.define("GOL.controller.Grid", {
     constructor: function(rows, cols, cellFactory, rules) {
         this.model = new GOL.model.Grid(rows, cols, cellFactory, rules);
         
-        this.view = Ext.create("GOL.view.Grid", {
+        this.view = Ext.create('GOL.view.Grid', {
             model: this.model
         });
         
-        this.addEvents("generationchange");
-        this.relayEvents(this.model, ["generationchange"]);
+        this.addEvents('generationchange');
+        this.relayEvents(this.model, ['generationchange']);
         
         this.setupMouseListeners();
     },
@@ -1587,10 +1587,10 @@ Ext.define("GOL.controller.Grid", {
     },
     
     setupMouseListeners: function() {
-        Ext.getDoc().on("mouseup", this.onDocumentMouseUp, this);
+        Ext.getDoc().on('mouseup', this.onDocumentMouseUp, this);
 
-        this.view.on("cellmousedown", this.onCellMouseDown, this);
-        this.view.on("cellmouseover", this.onCellMouseOver, this);
+        this.view.on('cellmousedown', this.onCellMouseDown, this);
+        this.view.on('cellmouseover', this.onCellMouseOver, this);
     },
 
     getView: function() {
@@ -1621,10 +1621,10 @@ Ext.define("GOL.controller.Grid", {
     },
     
     destroy: function() {
-        Ext.getDoc().un("mouseup", this.onDocumentMouseUp, this);
+        Ext.getDoc().un('mouseup', this.onDocumentMouseUp, this);
         
-        this.view.un("cellmousedown", this.onCellMouseDown, this);
-        this.view.un("cellmouseover", this.onCellMouseOver, this);
+        this.view.un('cellmousedown', this.onCellMouseDown, this);
+        this.view.un('cellmouseover', this.onCellMouseOver, this);
     }
 });
 

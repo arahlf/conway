@@ -1,10 +1,10 @@
 /**
  * @class GOL.view.Cell
  */
-Ext.define("GOL.view.Cell", {
+Ext.define('GOL.view.Cell', {
     
     mixins: {
-        observable: "Ext.util.Observable"
+        observable: 'Ext.util.Observable'
     },
     
     constructor: function(model, el) {
@@ -12,7 +12,7 @@ Ext.define("GOL.view.Cell", {
         
         this.el = el;
         this.model = model;
-        this.model.on("commit", this.updateView, this);
+        this.model.on('commit', this.updateView, this);
         this.updateView();
     },
     
@@ -35,7 +35,7 @@ Ext.define("GOL.view.Cell", {
     destroy: function() {
         var me = this;
         me.clearListeners();
-        me.el.dom.className = "";
+        me.el.dom.className = '';
         me.el = null;
         me.model = null;
     },

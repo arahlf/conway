@@ -2,8 +2,8 @@
  * @class GOL.pattern.AbstractCoordinatePattern
  * @extends GOL.pattern.Pattern
  */
-Ext.define("GOL.pattern.AbstractCoordinatePattern", {
-    extend: "GOL.pattern.Pattern",
+Ext.define('GOL.pattern.AbstractCoordinatePattern', {
+    extend: 'GOL.pattern.Pattern',
     
     /**
      * Applies a set of coordinates to a Grid model.

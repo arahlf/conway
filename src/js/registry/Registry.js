@@ -1,13 +1,13 @@
 /**
  * @class GOL.registry.Registry
  */
-Ext.define("GOL.registry.Registry", {
+Ext.define('GOL.registry.Registry', {
     /**
      * @constructor
      */
     constructor: function() {
         this.store = new Ext.data.Store({
-            model: "GOL.registry.Register"
+            model: 'GOL.registry.Register'
         });
     },
 

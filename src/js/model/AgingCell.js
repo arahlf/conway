@@ -4,8 +4,8 @@
  * 
  * A Cell implementation that keeps track of its age.
  */
-Ext.define("GOL.model.AgingCell", {
-    extend: "GOL.model.AbstractCell",
+Ext.define('GOL.model.AgingCell', {
+    extend: 'GOL.model.AbstractCell',
     
     age: 0,
     tempAge: 0,

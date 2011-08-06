@@ -4,11 +4,11 @@
  * @constructor
  * @param {Array} cells An array of cell models.
  *
- * Serves as a <a href="http://en.wikipedia.org/wiki/Composite_pattern">composite</a>
+ * Serves as a <a href='http://en.wikipedia.org/wiki/Composite_pattern'>composite</a>
  * of Cell model objects.
  */
-Ext.define("GOL.model.CompositeCell", {
-    extend: "GOL.model.Cell",
+Ext.define('GOL.model.CompositeCell', {
+    extend: 'GOL.model.Cell',
     
     constructor: function(cells) {
         this.callParent();
@@ -35,19 +35,19 @@ Ext.define("GOL.model.CompositeCell", {
     },
     
     kill: function() {
-        return this.forEachCell("kill");
+        return this.forEachCell('kill');
     },
     
     revive: function() {
-        return this.forEachCell("revive");
+        return this.forEachCell('revive');
     },
     
     persist: function() {
-        return this.forEachCell("persist");
+        return this.forEachCell('persist');
     },
     
     commit: function() {
-        return this.forEachCell("commit");
+        return this.forEachCell('commit');
     },
     
     /**
@@ -66,10 +66,10 @@ Ext.define("GOL.model.CompositeCell", {
     },
     
     // unsupported methods
-    getRow: GOL.unsupportedFn("CompositeCell.getRow"),
-    getCol: GOL.unsupportedFn("CompositeCell.getCol"),
-    getAliveNeighborsCount: GOL.unsupportedFn("CompositeCell.getAliveNeighborsCount"),
-    setNeighbors: GOL.unsupportedFn("CompositeCell.setNeighbors"),
-    getAge: GOL.unsupportedFn("CompositeCell.getAge"),
-    isAlive: GOL.unsupportedFn("CompositeCell.isAlive")
+    getRow: GOL.unsupportedFn('CompositeCell.getRow'),
+    getCol: GOL.unsupportedFn('CompositeCell.getCol'),
+    getAliveNeighborsCount: GOL.unsupportedFn('CompositeCell.getAliveNeighborsCount'),
+    setNeighbors: GOL.unsupportedFn('CompositeCell.setNeighbors'),
+    getAge: GOL.unsupportedFn('CompositeCell.getAge'),
+    isAlive: GOL.unsupportedFn('CompositeCell.isAlive')
 });

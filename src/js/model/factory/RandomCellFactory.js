@@ -1,5 +1,5 @@
-Ext.define("GOL.model.factory.RandomCellFactory", {
-    extend: "GOL.model.factory.CellFactory",
+Ext.define('GOL.model.factory.RandomCellFactory', {
+    extend: 'GOL.model.factory.CellFactory',
     
     createModel: function(row, col) {
         switch (Math.ceil(Math.random() * 3)) {
@@ -13,4 +13,4 @@ Ext.define("GOL.model.factory.RandomCellFactory", {
     }
 });
 
-GOL.registerCellFactory("Random", new GOL.model.factory.RandomCellFactory());
+GOL.registerCellFactory('Random', new GOL.model.factory.RandomCellFactory());

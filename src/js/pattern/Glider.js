@@ -2,8 +2,8 @@
  * @class GOL.pattern.Glider
  * @extends GOL.pattern.Pattern
  */
-Ext.define("GOL.pattern.Glider", {
-    extend: "GOL.pattern.AbstractCoordinatePattern",
+Ext.define('GOL.pattern.Glider', {
+    extend: 'GOL.pattern.AbstractCoordinatePattern',
     
     /**
      * {@link GOL.pattern.Pattern#applyPattern} implementation
@@ -21,4 +21,4 @@ Ext.define("GOL.pattern.Glider", {
     }
 });
 
-GOL.registerPattern("Glider", new GOL.pattern.Glider());
+GOL.registerPattern('Glider', new GOL.pattern.Glider());

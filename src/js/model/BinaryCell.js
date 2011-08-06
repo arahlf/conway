@@ -4,8 +4,8 @@
  *
  * Simple Cell implementation that is either dead or alive.
  */
-Ext.define("GOL.model.BinaryCell", {
-    extend: "GOL.model.AbstractCell",
+Ext.define('GOL.model.BinaryCell', {
+    extend: 'GOL.model.AbstractCell',
 
     alive: false,
     tempAlive: false,

@@ -2,8 +2,8 @@
  * @class GOL.pattern.Pulsar
  * @extends GOL.pattern.Pattern
  */
-Ext.define("GOL.pattern.Pulsar", {
-    extend: "GOL.pattern.AbstractCoordinatePattern",
+Ext.define('GOL.pattern.Pulsar', {
+    extend: 'GOL.pattern.AbstractCoordinatePattern',
     
     /**
      * {@link GOL.pattern.Pattern#applyPattern} implementation
@@ -73,4 +73,4 @@ Ext.define("GOL.pattern.Pulsar", {
     }
 });
 
-GOL.registerPattern("Pulsar", new GOL.pattern.Pulsar());
+GOL.registerPattern('Pulsar', new GOL.pattern.Pulsar());

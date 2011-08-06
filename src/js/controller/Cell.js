@@ -1,4 +1,4 @@
-Ext.define("GOL.controller.Cell", {
+Ext.define('GOL.controller.Cell', {
 
     constructor: function(model, renderTo) {
         this.model = model;

@@ -2,8 +2,8 @@
  * @class GOL.pattern.Beacon
  * @extends GOL.pattern.Pattern
  */
-Ext.define("GOL.pattern.Beacon", {
-    extend: "GOL.pattern.AbstractCoordinatePattern",
+Ext.define('GOL.pattern.Beacon', {
+    extend: 'GOL.pattern.AbstractCoordinatePattern',
     
     /**
      * {@link GOL.pattern.Pattern#applyPattern} implementation
@@ -23,4 +23,4 @@ Ext.define("GOL.pattern.Beacon", {
     }
 });
 
-GOL.registerPattern("Beacon", new GOL.pattern.Beacon());
+GOL.registerPattern('Beacon', new GOL.pattern.Beacon());

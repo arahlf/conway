@@ -1205,7 +1205,7 @@ Ext.define('GOL.model.factory.BinaryCellFactory', {
 });
 
 GOL.registerCellFactory('Binary', new GOL.model.factory.BinaryCellFactory());
-Ext.define('GOL.model.factory.RandomCellFactory', {
+Ext.define('GOL.model.factory.MixedCellFactory', {
     extend: 'GOL.model.factory.CellFactory',
     
     createModel: function(row, col) {
@@ -1220,7 +1220,7 @@ Ext.define('GOL.model.factory.RandomCellFactory', {
     }
 });
 
-GOL.registerCellFactory('Random', new GOL.model.factory.RandomCellFactory());
+GOL.registerCellFactory('Mixed', new GOL.model.factory.MixedCellFactory());
 
 /**
  * @class GOL.view.Table

@@ -1,4 +1,4 @@
-Ext.define('GOL.model.factory.RandomCellFactory', {
+Ext.define('GOL.model.factory.MixedCellFactory', {
     extend: 'GOL.model.factory.CellFactory',
     
     createModel: function(row, col) {
@@ -13,4 +13,4 @@ Ext.define('GOL.model.factory.RandomCellFactory', {
     }
 });
 
-GOL.registerCellFactory('Random', new GOL.model.factory.RandomCellFactory());
+GOL.registerCellFactory('Mixed', new GOL.model.factory.MixedCellFactory());

@@ -10,11 +10,11 @@ Ext.define('GOL.Application', {
     resizable: false,
     
     initComponent: function() {
-        var factory = new GOL.model.factory.RainbowCellFactory();
+        var factory = GOL.model.factory.Registry.firstValue();
         var rules = new GOL.rules.StandardRules();
 
         this.gridController = new GOL.controller.Grid(this.rows, this.cols, factory, rules);
-        this.gridController.applyPattern(GOL.pattern.Registry.getDefaultValue());
+        this.gridController.applyPattern(GOL.pattern.Registry.firstValue());
         
         this.toolbar = this.createToolbar();
 

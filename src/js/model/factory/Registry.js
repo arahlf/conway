@@ -1,14 +1,16 @@
-Ext.ns('GOL.cell');
-
 /**
- * @class GOL.cell.Registry
+ * @class GOL.model.factory.Registry
+ * 
  * Serves as a registry of Cell factories.
  */
-GOL.cell.Registry = new GOL.registry.Registry();
+Ext.define('GOL.model.factory.Registry', {
+    extend: 'GOL.registry.Registry',
+    singleton: true
+});
 
 /**
- * Shortcut for {GOL.cell.Registry#register}
+ * Shortcut for {GOL.model.factory.Registry#register}.
  * @member GOL
  * @method registerCellFactory
  */
-GOL.registerCellFactory = Ext.bind(GOL.cell.Registry.register, GOL.cell.Registry);
+GOL.registerCellFactory = Ext.bind(GOL.model.factory.Registry.register, GOL.model.factory.Registry);

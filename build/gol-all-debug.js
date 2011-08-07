@@ -34,11 +34,11 @@ Ext.define('GOL.Application', {
     resizable: false,
     
     initComponent: function() {
-        var factory = new GOL.model.factory.RainbowCellFactory();
+        var factory = GOL.model.factory.Registry.firstValue();
         var rules = new GOL.rules.StandardRules();
 
         this.gridController = new GOL.controller.Grid(this.rows, this.cols, factory, rules);
-        this.gridController.applyPattern(GOL.pattern.Registry.getDefaultValue());
+        this.gridController.applyPattern(GOL.pattern.Registry.firstValue());
         
         this.toolbar = this.createToolbar();
 
@@ -123,7 +123,7 @@ Ext.define('GOL.Toolbar', {
             playButton: this.createIconButton(this.iconClsPlay, this.onPlayClick),
             nextButton: this.createIconButton(this.iconClsNext, this.onNextClick),
             // menus
-            cellTypeMenu: this.createMenuButton(GOL.cell.Registry, 'Cell Type', this.onCellTypeSelect, this),
+            cellTypeMenu: this.createMenuButton(GOL.model.factory.Registry, 'Cell Type', this.onCellTypeSelect, this),
             patternMenu: this.createMenuButton(GOL.pattern.Registry, 'Pattern', this.onPatternSelect, this),
             // status text
             statusText: this.createStatusText()
@@ -336,7 +336,7 @@ Ext.define('GOL.registry.Registry', {
         return this.store;
     },
     
-    getDefaultValue: function() {
+    firstValue: function() {
         return this.store.first().getValue();
     }
 });
@@ -454,13 +454,14 @@ Ext.define('GOL.pattern.AbstractCoordinatePattern', {
         }
     }
 });
-Ext.ns('GOL.pattern');
-
 /**
  * @class GOL.pattern.Registry
  * Serves as a registry of Patterns.
  */
-GOL.pattern.Registry = new GOL.registry.Registry();
+Ext.define('GOL.pattern.Registry', {
+    extend: 'GOL.registry.Registry',
+    singleton: true
+});
 
 /**
  * Shortcut for {GOL.pattern.Registry#register}
@@ -1156,20 +1157,22 @@ Ext.define('GOL.model.RainbowCell', {
         return this;
     }
 });
-Ext.ns('GOL.cell');
-
 /**
- * @class GOL.cell.Registry
+ * @class GOL.model.factory.Registry
+ * 
  * Serves as a registry of Cell factories.
  */
-GOL.cell.Registry = new GOL.registry.Registry();
+Ext.define('GOL.model.factory.Registry', {
+    extend: 'GOL.registry.Registry',
+    singleton: true
+});
 
 /**
- * Shortcut for {GOL.cell.Registry#register}
+ * Shortcut for {GOL.model.factory.Registry#register}.
  * @member GOL
  * @method registerCellFactory
  */
-GOL.registerCellFactory = Ext.bind(GOL.cell.Registry.register, GOL.cell.Registry);
+GOL.registerCellFactory = Ext.bind(GOL.model.factory.Registry.register, GOL.model.factory.Registry);
 Ext.define('GOL.model.factory.CellFactory', {
     /**
      * Creates a new Cell model.
@@ -1512,9 +1515,9 @@ Ext.define('GOL.view.RainbowCell', {
         return this.colors[this.model.getAge() - 1];
     }
 });
-Ext.ns('GOL.view');
-
-GOL.view.CellFactory = {
+Ext.define('GOL.view.CellFactory', {
+    singleton: true,
+    
     /**
      * Determines and creates the appropriate view for the given model.
      */
@@ -1528,7 +1531,8 @@ GOL.view.CellFactory = {
         
         throw new Error('Could not determine view for model of type: ' + model.$className);
     }
-};
+});
+
 
 /**
  * @class GOL.controller.Cell

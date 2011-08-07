@@ -27,7 +27,7 @@ Ext.define('GOL.Toolbar', {
             playButton: this.createIconButton(this.iconClsPlay, this.onPlayClick),
             nextButton: this.createIconButton(this.iconClsNext, this.onNextClick),
             // menus
-            cellTypeMenu: this.createMenuButton(GOL.cell.Registry, 'Cell Type', this.onCellTypeSelect, this),
+            cellTypeMenu: this.createMenuButton(GOL.model.factory.Registry, 'Cell Type', this.onCellTypeSelect, this),
             patternMenu: this.createMenuButton(GOL.pattern.Registry, 'Pattern', this.onPatternSelect, this),
             // status text
             statusText: this.createStatusText()

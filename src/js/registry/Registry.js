@@ -30,7 +30,7 @@ Ext.define('GOL.registry.Registry', {
         return this.store;
     },
     
-    getDefaultValue: function() {
+    firstValue: function() {
         return this.store.first().getValue();
     }
 });

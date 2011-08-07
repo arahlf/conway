@@ -1,6 +1,6 @@
-Ext.ns('GOL.view');
-
-GOL.view.CellFactory = {
+Ext.define('GOL.view.CellFactory', {
+    singleton: true,
+    
     /**
      * Determines and creates the appropriate view for the given model.
      */
@@ -14,4 +14,4 @@ GOL.view.CellFactory = {
         
         throw new Error('Could not determine view for model of type: ' + model.$className);
     }
-};
+});

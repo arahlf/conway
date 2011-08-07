@@ -1,10 +1,11 @@
-Ext.ns('GOL.pattern');
-
 /**
  * @class GOL.pattern.Registry
  * Serves as a registry of Patterns.
  */
-GOL.pattern.Registry = new GOL.registry.Registry();
+Ext.define('GOL.pattern.Registry', {
+    extend: 'GOL.registry.Registry',
+    singleton: true
+});
 
 /**
  * Shortcut for {GOL.pattern.Registry#register}

@@ -1,4 +1,4 @@
-A JavaScript implementation of Conway's Game of Life using Ext JS.
+A JavaScript implementation of Conway's Game of Life using Ext JS in the MVC paradigm.
 Copyright (C) 2011  Alan Rahlf
 
 This program is free software: you can redistribute it and/or modify

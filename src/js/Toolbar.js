@@ -132,10 +132,16 @@ Ext.define('GOL.Toolbar', {
     },
     
     onPatternSelect: function(menuButton, register) {
+        if (this.isPlaying()) {
+            this.stopPlaying();
+        }
         this.gridController.applyPattern(register.getValue());
     },
     
     onCellTypeSelect: function(menuButton, register) {
+        if (this.isPlaying()) {
+            this.stopPlaying();
+        }
         this.gridController.reconfigure(register.getValue());
         this.gridController.applyPattern(this.patternMenu.getValue());
     }

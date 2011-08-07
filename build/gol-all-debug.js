@@ -228,10 +228,16 @@ Ext.define('GOL.Toolbar', {
     },
     
     onPatternSelect: function(menuButton, register) {
+        if (this.isPlaying()) {
+            this.stopPlaying();
+        }
         this.gridController.applyPattern(register.getValue());
     },
     
     onCellTypeSelect: function(menuButton, register) {
+        if (this.isPlaying()) {
+            this.stopPlaying();
+        }
         this.gridController.reconfigure(register.getValue());
         this.gridController.applyPattern(this.patternMenu.getValue());
     }
@@ -1524,8 +1530,18 @@ GOL.view.CellFactory = {
     }
 };
 
+/**
+ * @class GOL.controller.Cell
+ * 
+ * A Cell controller.
+ */
 Ext.define('GOL.controller.Cell', {
-
+    /**
+     * Creates a new controller.
+     * 
+     * @param model The controller's model.
+     * @param renderTo
+     */
     constructor: function(model, renderTo) {
         this.model = model;
         this.view = GOL.view.CellFactory.create(model, renderTo);

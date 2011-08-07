@@ -1,5 +1,15 @@
+/**
+ * @class GOL.controller.Cell
+ * 
+ * A Cell controller.
+ */
 Ext.define('GOL.controller.Cell', {
-
+    /**
+     * Creates a new controller.
+     * 
+     * @param model The controller's model.
+     * @param renderTo
+     */
     constructor: function(model, renderTo) {
         this.model = model;
         this.view = GOL.view.CellFactory.create(model, renderTo);

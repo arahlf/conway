@@ -11,13 +11,12 @@ Ext.define('GOL.Application', {
     
     initComponent: function() {
         var factory = GOL.model.factory.Registry.firstValue();
-        var rules = new GOL.rules.StandardRules();
-
-        this.gridController = new GOL.controller.Grid(this.rows, this.cols, factory, rules);
+        
+        this.gridController = new GOL.controller.Grid(this.rows, this.cols, factory, this.rules);
         this.gridController.applyPattern(GOL.pattern.Registry.firstValue());
         
         this.toolbar = this.createToolbar();
-
+        
         var view = this.gridController.getView();
         
         // disable the toolbar while loading

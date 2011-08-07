@@ -1,9 +1,16 @@
 /**
+ * @class GOL.model.AbstractCell
+ * @extends GOL.model.Cell
+ * 
  * An abstract base class for Cells that provides common/shared functionality.
  */
 Ext.define('GOL.model.AbstractCell', {
     extend: 'GOL.model.Cell',
     
+    /**
+     * @param {Number} row
+     * @param {Number} col
+     */
     constructor: function(row, col) {
         this.row = row;
         this.col = col;

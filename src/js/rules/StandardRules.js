@@ -8,13 +8,10 @@
  */
 Ext.define('GOL.rules.StandardRules', {
     extend: 'GOL.rules.Rules',
-
-    /**
-     * {@link GOL.rules.Rules#applyRules} implementation
-     */
+    
     applyRules: function(cell) {
         var aliveNeighbors = cell.getAliveNeighborsCount();
-
+        
         if (cell.isAlive()) {
             if (aliveNeighbors > 3 || aliveNeighbors < 2) {
                 cell.kill();

@@ -1,7 +1,13 @@
+/**
+ * @class GOL.model.factory.RainbowCellFactory
+ * @extends GOL.model.factory.CellFactory
+ * 
+ * A factory that creates RainbowCells.
+ */
 Ext.define('GOL.model.factory.RainbowCellFactory', {
     extend: 'GOL.model.factory.CellFactory',
     
-    createModel: function(row, col) {
+    create: function(row, col) {
         return new GOL.model.RainbowCell(row, col);
     }
 });

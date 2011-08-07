@@ -6,11 +6,6 @@
  * @cfg {GOL.registry.Registry} registry
  * @cfg {Function} selectHandler Shortcut for adding a 'select' listener.
  */
-
-
-// probably shouldn't enforce a default value, should be injected instead
-// figure out how to add tooltips on a menu item
-
 Ext.define('GOL.registry.MenuButton', {
     extend: 'Ext.button.Button',
     

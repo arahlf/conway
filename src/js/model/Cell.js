@@ -1,4 +1,6 @@
 /**
+ * @class GOL.model.Cell
+ * 
  * An interface for Cells.
  */
 Ext.define('GOL.model.Cell', {

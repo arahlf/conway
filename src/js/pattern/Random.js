@@ -5,9 +5,6 @@
 Ext.define('GOL.pattern.Random', {
     extend: 'GOL.pattern.Pattern',
     
-    /**
-     * {@link GOL.pattern.Pattern#applyPattern} implementation
-     */
     applyPattern: function(grid) {
         grid.eachCell(function(cell) {
             if (Math.random() > 0.5) {

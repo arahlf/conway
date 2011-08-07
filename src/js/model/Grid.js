@@ -49,7 +49,7 @@ Ext.define('GOL.model.Grid', {
             row = [];
             
             for (var c = 0; c < this.cols; c++) {
-                row.push(cellFactory.createModel(r, c));
+                row.push(cellFactory.create(r, c));
             }
             
             cells.push(row);
@@ -133,5 +133,10 @@ Ext.define('GOL.model.Grid', {
     applyPattern: function(pattern) {
         this.killAllCells();
         pattern.applyPattern(this);
+    },
+    
+    destroy: function() {
+        Ext.destroy(this.cells);
+        this.cells = null;
     }
 });

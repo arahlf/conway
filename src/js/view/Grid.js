@@ -22,7 +22,31 @@ Ext.define('GOL.view.Grid', {
             items: [this.loadingView, this.gridView]
         });
         
-        this.model.on('reconfigure', this.onReconfigure, this);
+        this.addEvents(
+            /**
+             * @event beforeload
+             */
+            'beforeload',
+            
+            /**
+             * @event load
+             */
+            'load',
+            
+            /**
+             * @event cellmousedown
+             * @param {GOL.controller.Cell}
+             */
+            'cellmousedown',
+            
+            /**
+             * @event cellmouseover
+             * @param {GOL.controller.Cell}
+             */
+            'cellmouseover'
+        );
+        
+        this.mon(this.model, 'reconfigure', this.onReconfigure, this);
         
         this.callParent();
     },
@@ -59,8 +83,8 @@ Ext.define('GOL.view.Grid', {
         Ext.defer(function() {
             this.fireEvent('beforeload');
             
-            this.gridView.el.on('mousedown', this.onTableCellMouseDown, this, { delegate: 'td' });
-            this.gridView.el.on('mouseover', this.onTableCellMouseOver, this, { delegate: 'td' });
+            this.mon(this.gridView.el, 'mousedown', this.onTableCellMouseDown, this, { delegate: 'td' });
+            this.mon(this.gridView.el, 'mouseover', this.onTableCellMouseOver, this, { delegate: 'td' });
             
             Ext.defer(this.addRow, 50, this);
         }, 100, this);
@@ -98,7 +122,7 @@ Ext.define('GOL.view.Grid', {
         }
         else {
             this.getLayout().setActiveItem(this.gridView);
-            this.fireEvent('load'); // TODO document events
+            this.fireEvent('load');
         }
     },
     

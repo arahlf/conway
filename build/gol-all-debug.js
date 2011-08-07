@@ -134,13 +134,6 @@ Ext.define('GOL.Toolbar', {
     },
     
     /**
-     * Triggers the next generation of Cells.
-     */
-    triggerNextGeneration: function() {
-        this.gridController.nextGeneration();
-    },
-    
-    /**
      * Returns whether or not the Toolbar is 'playing'.
      * @return {Boolean}
      */
@@ -211,7 +204,7 @@ Ext.define('GOL.Toolbar', {
     
     startPlaying: function() {
         this.playButton.setIconCls(this.iconClsPause);
-        this.intervalId = setInterval(Ext.bind(this.triggerNextGeneration, this), this.millisPerIteration);
+        this.intervalId = setInterval(Ext.bind(this.gridController.nextGeneration, this.gridController), this.millisPerIteration);
     },
     
     stopPlaying: function() {
@@ -222,7 +215,7 @@ Ext.define('GOL.Toolbar', {
     
     onNextClick: function() {
         if (!this.isPlaying()) {
-            this.triggerNextGeneration();
+            this.gridController.nextGeneration();
         }
     },
     
@@ -264,13 +257,10 @@ Ext.define('GOL.rules.Rules', {
  */
 Ext.define('GOL.rules.StandardRules', {
     extend: 'GOL.rules.Rules',
-
-    /**
-     * {@link GOL.rules.Rules#applyRules} implementation
-     */
+    
     applyRules: function(cell) {
         var aliveNeighbors = cell.getAliveNeighborsCount();
-
+        
         if (cell.isAlive()) {
             if (aliveNeighbors > 3 || aliveNeighbors < 2) {
                 cell.kill();
@@ -347,11 +337,6 @@ Ext.define('GOL.registry.Registry', {
  * @cfg {GOL.registry.Registry} registry
  * @cfg {Function} selectHandler Shortcut for adding a 'select' listener.
  */
-
-
-// probably shouldn't enforce a default value, should be injected instead
-// figure out how to add tooltips on a menu item
-
 Ext.define('GOL.registry.MenuButton', {
     extend: 'Ext.button.Button',
     
@@ -475,9 +460,6 @@ GOL.registerPattern = Ext.bind(GOL.pattern.Registry.register, GOL.pattern.Regist
 Ext.define('GOL.pattern.GliderGun', {
     extend: 'GOL.pattern.AbstractCoordinatePattern',
     
-    /**
-     * {@link GOL.pattern.Pattern#applyPattern} implementation
-     */
     applyPattern: function(grid) {
         var coordinates = [
             [2, 6],
@@ -530,9 +512,6 @@ GOL.registerPattern('Glider Gun', new GOL.pattern.GliderGun());
 Ext.define('GOL.pattern.Random', {
     extend: 'GOL.pattern.Pattern',
     
-    /**
-     * {@link GOL.pattern.Pattern#applyPattern} implementation
-     */
     applyPattern: function(grid) {
         grid.eachCell(function(cell) {
             if (Math.random() > 0.5) {
@@ -554,9 +533,6 @@ GOL.registerPattern('Random', new GOL.pattern.Random());
 Ext.define('GOL.pattern.Beacon', {
     extend: 'GOL.pattern.AbstractCoordinatePattern',
     
-    /**
-     * {@link GOL.pattern.Pattern#applyPattern} implementation
-     */
     applyPattern: function(grid) {
         var coordinates = [
             [1, 1],
@@ -580,9 +556,6 @@ GOL.registerPattern('Beacon', new GOL.pattern.Beacon());
 Ext.define('GOL.pattern.Glider', {
     extend: 'GOL.pattern.AbstractCoordinatePattern',
     
-    /**
-     * {@link GOL.pattern.Pattern#applyPattern} implementation
-     */
     applyPattern: function(grid) {
         var coordinates = [
             [1, 1],
@@ -604,9 +577,6 @@ GOL.registerPattern('Glider', new GOL.pattern.Glider());
 Ext.define('GOL.pattern.LWSS', {
     extend: 'GOL.pattern.AbstractCoordinatePattern',
     
-    /**
-     * {@link GOL.pattern.Pattern#applyPattern} implementation
-     */
     applyPattern: function(grid) {
         var coordinates = [
             [1, 1],
@@ -632,9 +602,6 @@ GOL.registerPattern('LWSS', new GOL.pattern.LWSS());
 Ext.define('GOL.pattern.Pulsar', {
     extend: 'GOL.pattern.AbstractCoordinatePattern',
     
-    /**
-     * {@link GOL.pattern.Pattern#applyPattern} implementation
-     */
     applyPattern: function(grid) {
         var coordinates = [
             [4, 2],
@@ -753,7 +720,7 @@ Ext.define('GOL.model.Grid', {
             row = [];
             
             for (var c = 0; c < this.cols; c++) {
-                row.push(cellFactory.createModel(r, c));
+                row.push(cellFactory.create(r, c));
             }
             
             cells.push(row);
@@ -837,9 +804,16 @@ Ext.define('GOL.model.Grid', {
     applyPattern: function(pattern) {
         this.killAllCells();
         pattern.applyPattern(this);
+    },
+    
+    destroy: function() {
+        Ext.destroy(this.cells);
+        this.cells = null;
     }
 });
 /**
+ * @class GOL.model.Cell
+ * 
  * An interface for Cells.
  */
 Ext.define('GOL.model.Cell', {
@@ -924,11 +898,18 @@ Ext.define('GOL.model.Cell', {
     destroy: GOL.abstractFn
 });
 /**
+ * @class GOL.model.AbstractCell
+ * @extends GOL.model.Cell
+ * 
  * An abstract base class for Cells that provides common/shared functionality.
  */
 Ext.define('GOL.model.AbstractCell', {
     extend: 'GOL.model.Cell',
     
+    /**
+     * @param {Number} row
+     * @param {Number} col
+     */
     constructor: function(row, col) {
         this.row = row;
         this.col = col;
@@ -986,8 +967,6 @@ Ext.define('GOL.model.AbstractCell', {
 /**
  * @class GOL.model.CompositeCell
  * @extends GOL.model.Cell
- * @constructor
- * @param {Array} cells An array of cell models.
  *
  * Serves as a <a href='http://en.wikipedia.org/wiki/Composite_pattern'>composite</a>
  * of Cell model objects.
@@ -995,6 +974,9 @@ Ext.define('GOL.model.AbstractCell', {
 Ext.define('GOL.model.CompositeCell', {
     extend: 'GOL.model.Cell',
     
+    /**
+     * @param {Array} cells An array of cell models.
+     */
     constructor: function(cells) {
         this.callParent();
         this.cells = cells;
@@ -1172,57 +1154,86 @@ Ext.define('GOL.model.factory.Registry', {
  * @method registerCellFactory
  */
 GOL.registerCellFactory = Ext.bind(GOL.model.factory.Registry.register, GOL.model.factory.Registry);
+/**
+ * @class GOL.model.factory.CellFactory
+ * 
+ * An interface for Cell factories.
+ */
 Ext.define('GOL.model.factory.CellFactory', {
     /**
      * Creates a new Cell model.
      * @param {Number} row
      * @param {Number} col
      */
-    createCell: GOL.abstractFn
+    create: GOL.abstractFn
 });
+/**
+ * @class GOL.model.factory.RainbowCellFactory
+ * @extends GOL.model.factory.CellFactory
+ * 
+ * A factory that creates RainbowCells.
+ */
 Ext.define('GOL.model.factory.RainbowCellFactory', {
     extend: 'GOL.model.factory.CellFactory',
     
-    createModel: function(row, col) {
+    create: function(row, col) {
         return new GOL.model.RainbowCell(row, col);
     }
 });
 
 GOL.registerCellFactory('Rainbow', new GOL.model.factory.RainbowCellFactory());
+/**
+ * @class GOL.model.factory.AgingCellFactory
+ * @extends GOL.model.factory.CellFactory
+ * 
+ * A factory that creates AgingCells.
+ */
 Ext.define('GOL.model.factory.AgingCellFactory', {
     extend: 'GOL.model.factory.CellFactory',
     
-    createModel: function(row, col) {
+    create: function(row, col) {
         return new GOL.model.AgingCell(row, col);
     }
 });
 
 GOL.registerCellFactory('Aging', new GOL.model.factory.AgingCellFactory());
+/**
+ * @class GOL.model.factory.BinaryCellFactory
+ * @extends GOL.model.factory.CellFactory
+ * 
+ * A factory that creates BinaryCells.
+ */
 Ext.define('GOL.model.factory.BinaryCellFactory', {
     extend: 'GOL.model.factory.CellFactory',
     
-    createModel: function(row, col) {
+    create: function(row, col) {
         return new GOL.model.BinaryCell(row, col);
     }
 });
 
 GOL.registerCellFactory('Binary', new GOL.model.factory.BinaryCellFactory());
-Ext.define('GOL.model.factory.MixedCellFactory', {
+/**
+ * @class GOL.model.factory.RandomCellFactory
+ * @extends GOL.model.factory.CellFactory
+ * 
+ * A factory that randomly creates Aging, Binary or Rainbow Cells.
+ */
+Ext.define('GOL.model.factory.RandomCellFactory', {
     extend: 'GOL.model.factory.CellFactory',
     
-    createModel: function(row, col) {
+    create: function(row, col) {
         switch (Math.ceil(Math.random() * 3)) {
             case 1:
-                return new GOL.model.BinaryCell(row, col);
-            case 2:
                 return new GOL.model.AgingCell(row, col);
+            case 2:
+                return new GOL.model.BinaryCell(row, col);
             case 3:
                 return new GOL.model.RainbowCell(row, col);
         }
     }
 });
 
-GOL.registerCellFactory('Mixed', new GOL.model.factory.MixedCellFactory());
+GOL.registerCellFactory('Random', new GOL.model.factory.RandomCellFactory());
 
 /**
  * @class GOL.view.Table
@@ -1287,7 +1298,31 @@ Ext.define('GOL.view.Grid', {
             items: [this.loadingView, this.gridView]
         });
         
-        this.model.on('reconfigure', this.onReconfigure, this);
+        this.addEvents(
+            /**
+             * @event beforeload
+             */
+            'beforeload',
+            
+            /**
+             * @event load
+             */
+            'load',
+            
+            /**
+             * @event cellmousedown
+             * @param {GOL.controller.Cell}
+             */
+            'cellmousedown',
+            
+            /**
+             * @event cellmouseover
+             * @param {GOL.controller.Cell}
+             */
+            'cellmouseover'
+        );
+        
+        this.mon(this.model, 'reconfigure', this.onReconfigure, this);
         
         this.callParent();
     },
@@ -1324,8 +1359,8 @@ Ext.define('GOL.view.Grid', {
         Ext.defer(function() {
             this.fireEvent('beforeload');
             
-            this.gridView.el.on('mousedown', this.onTableCellMouseDown, this, { delegate: 'td' });
-            this.gridView.el.on('mouseover', this.onTableCellMouseOver, this, { delegate: 'td' });
+            this.mon(this.gridView.el, 'mousedown', this.onTableCellMouseDown, this, { delegate: 'td' });
+            this.mon(this.gridView.el, 'mouseover', this.onTableCellMouseOver, this, { delegate: 'td' });
             
             Ext.defer(this.addRow, 50, this);
         }, 100, this);
@@ -1363,7 +1398,7 @@ Ext.define('GOL.view.Grid', {
         }
         else {
             this.getLayout().setActiveItem(this.gridView);
-            this.fireEvent('load'); // TODO document events
+            this.fireEvent('load');
         }
     },
     
@@ -1535,40 +1570,41 @@ Ext.define('GOL.view.CellFactory', {
 
 /**
  * @class GOL.controller.Cell
- * 
- * A Cell controller.
  */
 Ext.define('GOL.controller.Cell', {
     /**
-     * Creates a new controller.
-     * 
-     * @param model The controller's model.
-     * @param renderTo
+     * Creates a new Cell controller.
+     * @param {GOL.model.Cell} model A Cell model to control.
+     * @param {Ext.Element} renderTo The render target for the view.
      */
     constructor: function(model, renderTo) {
         this.model = model;
         this.view = GOL.view.CellFactory.create(model, renderTo);
     },
-
+    
+    /**
+     * Kills the Cell.
+     */
     kill: function() {
         if (this.model.isAlive()) {
             this.model.revive().commit();
         }
     },
-
+    
+    /**
+     * Revives the Cell.
+     */
     revive: function() {
         if (!this.model.isAlive()) {
             this.model.revive().commit();
         }
     },
     
-    getView: function() {
-        return this.view;
-    },
-    
+    /**
+     * Destroys the Cell and its underlying state.
+     */
     destroy: function() {
-        this.model.destroy();
-        this.view.destroy();
+        Ext.destroy(this.model, this.view);
         
         this.model = null;
         this.view = null;
@@ -1582,8 +1618,20 @@ Ext.define('GOL.controller.Grid', {
         observable: 'Ext.util.Observable'
     },
     
+    /**
+     * @type Boolean
+     * @property mouseDown
+     * @private
+     */
     mouseDown: false,
     
+    /**
+     * Creates a new Grid controller.
+     * @param rows {Number} The number of rows in the Grid.
+     * @param cols {Number} The number of columns in the Grid.
+     * @param cellFactory {GOL.model.factory.CellFactory} The Cell model factory to use.
+     * @param rules {GOL.rules.Rules} The rules for the Grid to follow.
+     */
     constructor: function(rows, cols, cellFactory, rules) {
         this.model = new GOL.model.Grid(rows, cols, cellFactory, rules);
         
@@ -1591,35 +1639,83 @@ Ext.define('GOL.controller.Grid', {
             model: this.model
         });
         
-        this.addEvents('generationchange');
+        this.addEvents(
+            /**
+             * @event generationchange
+             * @param {Number} count The new generation count.
+             */
+            'generationchange'
+        );
+        
         this.relayEvents(this.model, ['generationchange']);
         
         this.setupMouseListeners();
     },
     
+    /**
+     * Applies the given pattern to the Grid.
+     * @param {GOL.pattern.Pattern} pattern
+     */
     applyPattern: function(pattern) {
         this.model.applyPattern(pattern);
     },
     
+    /**
+     * Creates the next generation of Cells.
+     */
     nextGeneration: function() {
         this.model.nextGeneration();
     },
     
-    setupMouseListeners: function() {
-        Ext.getDoc().on('mouseup', this.onDocumentMouseUp, this);
-
-        this.view.on('cellmousedown', this.onCellMouseDown, this);
-        this.view.on('cellmouseover', this.onCellMouseOver, this);
-    },
-
+    /**
+     * Gets the controller's view.
+     * @returns {GOL.view.Grid}
+     */
     getView: function() {
         return this.view;
     },
-
+    
+    /**
+     * Kills all of the Grid's Cells.
+     */
+    killAllCells: function() {
+        this.model.killAllCells();
+    },
+    
+    /**
+     * Reconfigures the Grid.
+     * @param {GOL.model.factory.CellFactory} cellFactory
+     */
+    reconfigure: function(cellFactory) {
+        this.model.reconfigure(cellFactory);
+    },
+    
+    /**
+     * Destroys the controller and its associated model + view.
+     */
+    destroy: function() {
+        Ext.getDoc().un('mouseup', this.onDocumentMouseUp, this);
+        
+        this.view.un('cellmousedown', this.onCellMouseDown, this);
+        this.view.un('cellmouseover', this.onCellMouseOver, this);
+        
+        Ext.destroy(this.model, this.view);
+        
+        this.model = null;
+        this.view = null;
+    },
+    
+    setupMouseListeners: function() {
+        Ext.getDoc().on('mouseup', this.onDocumentMouseUp, this);
+        
+        this.view.on('cellmousedown', this.onCellMouseDown, this);
+        this.view.on('cellmouseover', this.onCellMouseOver, this);
+    },
+    
     onDocumentMouseUp: function() {
         this.mouseDown = false;
     },
-
+    
     onCellMouseDown: function(cell) {
         this.mouseDown = true;
         cell.revive();
@@ -1629,21 +1725,6 @@ Ext.define('GOL.controller.Grid', {
         if (this.mouseDown) {
             cell.revive();
         }
-    },
-    
-    killAllCells: function() {
-        this.model.killAllCells();
-    },
-    
-    reconfigure: function(cellFactory) {
-        this.model.reconfigure(cellFactory);
-    },
-    
-    destroy: function() {
-        Ext.getDoc().un('mouseup', this.onDocumentMouseUp, this);
-        
-        this.view.un('cellmousedown', this.onCellMouseDown, this);
-        this.view.un('cellmouseover', this.onCellMouseOver, this);
     }
 });
 

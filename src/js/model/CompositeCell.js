@@ -1,8 +1,6 @@
 /**
  * @class GOL.model.CompositeCell
  * @extends GOL.model.Cell
- * @constructor
- * @param {Array} cells An array of cell models.
  *
  * Serves as a <a href='http://en.wikipedia.org/wiki/Composite_pattern'>composite</a>
  * of Cell model objects.
@@ -10,6 +8,9 @@
 Ext.define('GOL.model.CompositeCell', {
     extend: 'GOL.model.Cell',
     
+    /**
+     * @param {Array} cells An array of cell models.
+     */
     constructor: function(cells) {
         this.callParent();
         this.cells = cells;

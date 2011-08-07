@@ -39,13 +39,6 @@ Ext.define('GOL.Toolbar', {
     },
     
     /**
-     * Triggers the next generation of Cells.
-     */
-    triggerNextGeneration: function() {
-        this.gridController.nextGeneration();
-    },
-    
-    /**
      * Returns whether or not the Toolbar is 'playing'.
      * @return {Boolean}
      */
@@ -116,7 +109,7 @@ Ext.define('GOL.Toolbar', {
     
     startPlaying: function() {
         this.playButton.setIconCls(this.iconClsPause);
-        this.intervalId = setInterval(Ext.bind(this.triggerNextGeneration, this), this.millisPerIteration);
+        this.intervalId = setInterval(Ext.bind(this.gridController.nextGeneration, this.gridController), this.millisPerIteration);
     },
     
     stopPlaying: function() {
@@ -127,7 +120,7 @@ Ext.define('GOL.Toolbar', {
     
     onNextClick: function() {
         if (!this.isPlaying()) {
-            this.triggerNextGeneration();
+            this.gridController.nextGeneration();
         }
     },
     

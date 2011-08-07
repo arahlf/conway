@@ -5,9 +5,6 @@
 Ext.define('GOL.pattern.Pulsar', {
     extend: 'GOL.pattern.AbstractCoordinatePattern',
     
-    /**
-     * {@link GOL.pattern.Pattern#applyPattern} implementation
-     */
     applyPattern: function(grid) {
         var coordinates = [
             [4, 2],

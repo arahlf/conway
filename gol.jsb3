@@ -110,7 +110,7 @@
             "name": "BinaryCellFactory.js"
         }, {
             "path": "src/js/model/factory/",
-            "name": "MixedCellFactory.js"
+            "name": "RandomCellFactory.js"
         }]
     }, {
         "name": "View",

@@ -10,7 +10,7 @@ Ext.define('GOL.model.RainbowCell', {
     MAX_AGE: 7,
     
     persist: function() {
-        if (this.age < this.MAX_AGE && this.tempAge < this.MAX_AGE) {
+        if (this.tempAge > 0 && this.age < this.MAX_AGE && this.tempAge < this.MAX_AGE) {
             this.tempAge++;
         }
         return this;
